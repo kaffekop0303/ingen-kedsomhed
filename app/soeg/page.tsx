@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import { useAuth } from '@clerk/nextjs'
+import Link from 'next/link'
 import Navigation from '@/components/Navigation'
 import { activities } from '@/lib/activities'
 import type { Activity } from '@/lib/types'
@@ -264,13 +265,13 @@ export default function SoegPage() {
             <p className="text-sm font-bold text-purple-700 mb-2" style={{ fontFamily: '"Nunito", sans-serif' }}>
               💜 Log ind for at gemme dine favoritter!
             </p>
-            <a
+            <Link
               href="/sign-up"
               className="inline-block text-white font-extrabold text-sm py-2 px-5 rounded-full transition-all hover:opacity-90"
               style={{ fontFamily: '"Baloo 2", cursive', background: '#9B5DE5' }}
             >
               Opret gratis konto
-            </a>
+            </Link>
           </div>
         )}
       </main>
