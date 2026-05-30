@@ -1,0 +1,97 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #9B5DE5;
+  --color-primary-dark: #7B3FC5;
+  --color-primary-light: #C89EF5;
+  --color-accent1: #FF6B6B;
+  --color-accent2: #FFB703;
+  --color-accent3: #1D9E75;
+  --color-accent4: #3A86FF;
+  --color-accent5: #F72585;
+  --font-nunito: 'Nunito', sans-serif;
+  --font-baloo: 'Baloo 2', cursive;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-nunito);
+  background: repeating-linear-gradient(
+    135deg,
+    #FFE5E5 0,
+    #FFE5E5 40px,
+    #FFEFD5 40px,
+    #FFEFD5 80px,
+    #FFFBD5 80px,
+    #FFFBD5 120px,
+    #E5FFE5 120px,
+    #E5FFE5 160px,
+    #E5F5FF 160px,
+    #E5F5FF 200px,
+    #EEE5FF 200px,
+    #EEE5FF 240px,
+    #FFE5F5 240px,
+    #FFE5F5 280px
+  );
+  min-height: 100vh;
+}
+
+.font-baloo {
+  font-family: var(--font-baloo);
+}
+
+.font-nunito {
+  font-family: var(--font-nunito);
+}
+
+.gradient-text {
+  background: linear-gradient(90deg, #FF6B6B, #FF9A3C, #FFB703, #1D9E75, #3A86FF, #9B5DE5, #F72585);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.card-shadow {
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.08);
+}
+
+.card-shadow-purple {
+  box-shadow: 0 8px 0 #e0c0ff, 0 12px 30px rgba(155, 93, 229, 0.18);
+}
+
+@keyframes bounce2 {
+  from { transform: translateY(0); }
+  to { transform: translateY(-8px); }
+}
+
+@keyframes confetti-fall {
+  0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(60px) rotate(360deg); opacity: 0; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(155, 93, 229, 0.4); }
+  50% { box-shadow: 0 0 0 12px rgba(155, 93, 229, 0); }
+}
+
+.animate-bounce2 {
+  animation: bounce2 1.5s ease-in-out infinite alternate;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+/* Clerk component overrides */
+.cl-rootBox {
+  width: 100%;
+}
