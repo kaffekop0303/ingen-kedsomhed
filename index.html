@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ingen Kedsomhed! 🎉</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;900&family=Baloo+2:wght@400;700;800&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Nunito',sans-serif;background:repeating-linear-gradient(135deg,#FFE5E5 0,#FFE5E5 40px,#FFEFD5 40px,#FFEFD5 80px,#FFFBD5 80px,#FFFBD5 120px,#E5FFE5 120px,#E5FFE5 160px,#E5F5FF 160px,#E5F5FF 200px,#EEE5FF 200px,#EEE5FF 240px,#FFE5F5 240px,#FFE5F5 280px);min-height:100vh;}
+.nav{background:#9B5DE5;padding:0 1rem;display:flex;align-items:center;gap:0.8rem;height:52px;position:sticky;top:0;z-index:100;}
+.logo{font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;color:#fff;cursor:pointer;flex-shrink:0;}
+.sw{flex:1;position:relative;max-width:260px;}
+.si{width:100%;background:rgba(255,255,255,0.18);border:2px solid rgba(255,255,255,0.3);border-radius:50px;padding:6px 30px 6px 12px;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;color:#fff;outline:none;}
+.si::placeholder{color:rgba(255,255,255,0.6);}
+.si:focus{background:rgba(255,255,255,0.28);border-color:rgba(255,255,255,0.6);}
+.s-icon{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:12px;pointer-events:none;}
+.sdd{position:absolute;top:calc(100% + 8px);left:0;right:0;background:#fff;border-radius:14px;box-shadow:0 8px 30px rgba(0,0,0,0.18);z-index:500;overflow:hidden;border:1px solid #e0e0e0;max-height:340px;overflow-y:auto;display:none;}
+.sdd-h{padding:6px 12px 3px;font-family:'Baloo 2',cursive;font-size:10px;font-weight:800;color:#999;text-transform:uppercase;background:#f8f4ff;}
+.sdd-item{display:flex;align-items:center;gap:8px;padding:8px 12px;cursor:pointer;border-bottom:1px solid #f5f5f5;}
+.sdd-item:hover{background:#f5f0ff;}
+.nlinks{display:flex;gap:0.4rem;align-items:center;flex-shrink:0;}
+.nl{font-size:11px;font-weight:700;color:rgba(255,255,255,0.8);cursor:pointer;padding:4px 7px;border-radius:20px;white-space:nowrap;}
+.nl:hover{color:#fff;background:rgba(255,255,255,0.15);}
+.nl.on{color:#fff;background:rgba(255,255,255,0.22);}
+.pnb{display:flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);border:none;border-radius:50px;padding:3px 10px 3px 3px;cursor:pointer;}
+.pnb:hover{background:rgba(255,255,255,0.25);}
+.pnn{font-size:11px;font-weight:700;color:#fff;}
+.nb{background:#FF6B6B;color:#fff;font-size:9px;font-weight:800;width:15px;height:15px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;margin-left:3px;}
+.pb{background:rgba(255,255,255,0.88);padding:0.65rem 1.5rem;display:none;align-items:center;justify-content:center;border-bottom:1px solid rgba(200,200,200,0.4);}
+.pc{width:30px;height:30px;border-radius:50%;background:#ddd;display:flex;align-items:center;justify-content:center;font-family:'Baloo 2',cursive;font-weight:800;font-size:13px;color:#aaa;transition:all 0.3s;}
+.pc.done{background:#1D9E75;color:#fff;}
+.pc.act{background:#9B5DE5;color:#fff;box-shadow:0 0 0 3px rgba(155,93,229,0.25);}
+.pl{font-size:10px;font-weight:700;color:#aaa;margin-left:5px;white-space:nowrap;}
+.pl.act{color:#9B5DE5;}
+.pl.done{color:#1D9E75;}
+.pline{width:30px;height:3px;background:#ddd;margin:0 6px;border-radius:2px;}
+.pline.done{background:#1D9E75;}
+.page{display:none;}.page.on{display:block;}
+.cw{max-width:900px;margin:0 auto;padding:1.5rem 1.2rem;}
+.start{min-height:calc(100vh - 52px);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2.5rem 1.5rem;text-align:center;}
+.conf{font-size:2rem;letter-spacing:0.4rem;margin-bottom:1.5rem;animation:bo 1.5s ease-in-out infinite alternate;}
+@keyframes bo{from{transform:translateY(0);}to{transform:translateY(-8px);}}
+.skilt{background:#fff;border-radius:24px;padding:1.8rem 2.5rem;box-shadow:0 8px 0 #e0c0ff,0 12px 30px rgba(155,93,229,0.18);border:5px solid #9B5DE5;max-width:520px;width:100%;margin-bottom:1.8rem;position:relative;}
+.skilt::before{content:'🎉';font-size:2.8rem;position:absolute;top:-22px;left:50%;transform:translateX(-50%);}
+.sr{background:linear-gradient(90deg,#FF6B6B,#FF9A3C,#FFB703,#1D9E75,#3A86FF,#9B5DE5,#F72585);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;font-family:'Baloo 2',cursive;font-size:2.3rem;font-weight:800;line-height:1.1;display:block;margin-bottom:0.3rem;}
+.ss{font-size:0.9rem;font-weight:700;color:#777;}
+.sbtns{display:flex;flex-direction:column;gap:10px;width:100%;max-width:360px;}
+.smb{background:linear-gradient(90deg,#FF6B6B,#FFB703,#1D9E75,#3A86FF,#9B5DE5);color:#fff;border:none;border-radius:50px;padding:0.85rem 2rem;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;cursor:pointer;text-shadow:0 1px 3px rgba(0,0,0,0.2);animation:pu 2s ease-in-out infinite;}
+@keyframes pu{0%,100%{transform:scale(1);}50%{transform:scale(1.03);}}
+.smb:hover{transform:scale(1.05)!important;animation:none;}
+.s2b{background:linear-gradient(90deg,#3A86FF,#9B5DE5);color:#fff;border:none;border-radius:50px;padding:0.85rem 2rem;font-family:'Baloo 2',cursive;font-size:1.1rem;font-weight:800;cursor:pointer;}
+.s2b:hover{transform:scale(1.03);}
+.sgb{background:rgba(255,255,255,0.88);border:2px solid #ccc;border-radius:50px;padding:0.65rem 2rem;font-family:'Baloo 2',cursive;font-size:0.95rem;font-weight:800;cursor:pointer;color:#888;}
+.sgb:hover{border-color:#9B5DE5;color:#9B5DE5;}
+.lw{background:#fff;border-radius:18px;padding:1.1rem 1.8rem;border:3px solid #9B5DE5;margin-bottom:0.9rem;width:100%;max-width:360px;text-align:center;}
+.la{width:58px;height:58px;border-radius:50%;display:block;margin:0 auto 7px;border:3px solid #9B5DE5;}
+.ln{font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800;color:#333;}
+.ls{font-size:11px;color:#999;font-weight:700;margin-top:2px;}
+.hb{border-radius:18px;padding:1.6rem 1.5rem;text-align:center;margin-bottom:1.2rem;position:relative;overflow:hidden;}
+.hb::before{content:'';position:absolute;top:-35px;left:-35px;width:130px;height:130px;background:rgba(255,255,255,0.1);border-radius:50%;}
+.hb::after{content:'';position:absolute;bottom:-25px;right:-25px;width:100px;height:100px;background:rgba(255,255,255,0.08);border-radius:50%;}
+.hb h1{font-family:'Baloo 2',cursive;font-size:1.8rem;font-weight:800;color:#fff;position:relative;z-index:1;margin-bottom:3px;}
+.hb p{font-size:0.85rem;color:rgba(255,255,255,0.9);font-weight:700;position:relative;z-index:1;}
+.hb-m{background:linear-gradient(135deg,#FF6B6B,#9B5DE5);}
+.hb-p{background:#9B5DE5;}
+.hb-t{background:#1D9E75;}
+.hb-b{background:linear-gradient(135deg,#9B5DE5,#3A86FF);}
+.tc{display:grid;grid-template-columns:1fr 1fr;gap:1.1rem;align-items:start;}
+@media(max-width:600px){.tc{grid-template-columns:1fr;}}
+.card{background:rgba(255,255,255,0.92);border-radius:14px;padding:1.2rem;border:1px solid rgba(255,255,255,0.8);}
+.fl{font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;color:#333;margin-bottom:7px;display:block;}
+.fw{margin-bottom:1rem;}
+.cr{display:flex;gap:6px;flex-wrap:wrap;}
+.ac{background:#fff;border:2px solid #ddd;border-radius:50px;padding:0.3rem 0.85rem;font-family:'Nunito',sans-serif;font-size:12px;font-weight:700;color:#444;cursor:pointer;}
+.ac:hover{border-color:#9B5DE5;}
+.hcat{margin-bottom:0.75rem;}
+.hcl{font-family:'Baloo 2',cursive;font-size:0.68rem;font-weight:800;text-transform:uppercase;letter-spacing:0.5px;padding:2px 8px;border-radius:50px;display:inline-block;margin-bottom:5px;}
+.hcl.a{background:#FFE5E5;color:#c0392b;}
+.hcl.k{background:#E5F5FF;color:#1a6ea8;}
+.hcl.r{background:#E5FFE5;color:#1a6e3a;}
+.hcl.s{background:#F5E5FF;color:#7b2fbe;}
+.hg{display:flex;flex-wrap:wrap;gap:5px;}
+.hb2{background:#fff;border:2px solid #e0e0e0;border-radius:50px;padding:0.25rem 0.65rem;cursor:pointer;display:flex;align-items:center;gap:3px;white-space:nowrap;}
+.hb2:hover{border-color:#9B5DE5;background:#f5f0ff;}
+.hb2.sel{border-color:#9B5DE5;background:#9B5DE5;}
+.hb2.sel .hl{color:#fff;}
+.hi2{font-size:0.8rem;}
+.hl{font-size:10px;font-weight:700;color:#555;}
+.vb{display:block;width:100%;border:none;border-radius:13px;padding:0.95rem;font-family:'Baloo 2',cursive;font-size:1.15rem;font-weight:800;cursor:pointer;margin-top:1.1rem;background:linear-gradient(90deg,#FF6B6B,#FFB703,#1D9E75,#3A86FF,#9B5DE5);color:#fff;transition:transform 0.15s;text-shadow:0 1px 3px rgba(0,0,0,0.2);}
+.vb:hover{transform:scale(1.02);}
+.tb{background:#eee;color:#777;border:1px solid #ddd;border-radius:11px;padding:0.6rem 1.2rem;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.85rem;cursor:pointer;display:inline-block;margin-top:0.7rem;}
+.tb:hover{background:#ddd;}
+.err{color:#e05a2b;font-size:10px;font-weight:700;margin-top:4px;min-height:14px;}
+.fc2{border-radius:11px;padding:0.9rem;border:none;margin-bottom:8px;}
+.fc2.o{background:#FF9A3C;}.fc2.t{background:#1D9E75;}.fc2.p{background:#F72585;}.fc2.b{background:#3A86FF;}
+.fct{font-family:'Baloo 2',cursive;font-size:9px;font-weight:800;color:rgba(255,255,255,0.85);margin-bottom:3px;text-transform:uppercase;letter-spacing:0.5px;}
+.fctx{font-size:10px;color:#fff;font-weight:700;line-height:1.4;}
+.fc-i{font-size:1.5rem;display:block;margin-bottom:3px;}
+.ctr{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;}
+.ctrc{background:rgba(255,255,255,0.92);border-radius:9px;padding:0.65rem 0.4rem;text-align:center;}
+.ctrn{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:#9B5DE5;display:block;line-height:1;margin-bottom:1px;}
+.ctrl{font-size:9px;font-weight:700;color:#999;}
+.gg{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;}
+.gb{background:rgba(255,255,255,0.92);border:2px solid #ddd;border-radius:12px;padding:0.85rem 0.5rem;text-align:center;cursor:pointer;}
+.gb:hover{border-color:#9B5DE5;}
+.gb.sel{border-color:#9B5DE5;background:#9B5DE5;}
+.gb.sel .gbl,.gb.sel .gbs{color:#fff;}
+.gbi{font-size:1.5rem;display:block;margin-bottom:4px;}
+.gbl{font-size:11px;font-weight:700;color:#333;margin-bottom:1px;}
+.gbs{font-size:9px;color:#888;font-weight:700;}
+.vs{background:rgba(255,255,255,0.92);border-radius:13px;padding:0.9rem 1.2rem;margin-bottom:1.1rem;border:1px solid rgba(255,255,255,0.8);}
+.vt{font-family:'Baloo 2',cursive;font-size:0.82rem;font-weight:800;color:#333;margin-bottom:6px;display:block;}
+.vg{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;}
+.vbtn{border-radius:10px;padding:0.55rem 0.3rem;text-align:center;cursor:pointer;border:2px solid #e0e0e0;background:#fff;}
+.vbtn:hover{transform:translateY(-2px);border-color:#9B5DE5;}
+.vbtn.sel{border-color:#9B5DE5;background:#9B5DE5;}
+.vbtn.sel .vl2{color:#fff;}
+.vi2{font-size:1.2rem;display:block;margin-bottom:2px;}
+.vl2{font-size:9px;font-weight:700;color:#555;}
+.sb{background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.8);border-radius:10px;padding:0.65rem 1rem;margin-bottom:1.1rem;display:flex;gap:1.2rem;flex-wrap:wrap;}
+.si2{font-size:11px;}
+.sk{font-weight:700;color:#999;font-size:9px;display:block;margin-bottom:1px;}
+.sv{font-weight:700;color:#333;}
+.sct{font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;color:#333;margin-bottom:0.6rem;margin-top:1.1rem;}
+.il{display:flex;flex-direction:column;gap:7px;margin-bottom:0.4rem;}
+.ii{background:rgba(255,255,255,0.92);border:1px solid rgba(255,255,255,0.8);border-radius:10px;padding:0.75rem 0.85rem;display:flex;align-items:flex-start;gap:8px;}
+.ii:hover{border-color:#9B5DE5;}
+.ib{flex:1;}
+.it{display:flex;align-items:center;gap:6px;margin-bottom:2px;flex-wrap:wrap;}
+.ii2{font-size:1.2rem;}
+.it2{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;}
+.id2{font-size:10px;color:#666;font-weight:700;line-height:1.4;}
+.hrt{background:none;border:none;font-size:1.1rem;cursor:pointer;padding:3px;transition:transform 0.15s;flex-shrink:0;}
+.hrt:hover{transform:scale(1.3);}
+@keyframes hp{0%{transform:scale(1);}50%{transform:scale(1.5);}100%{transform:scale(1);}}
+.hrt.pop{animation:hp 0.3s ease;}
+.mb{display:flex;align-items:center;justify-content:center;gap:6px;width:100%;border:2px dashed #9B5DE5;border-radius:10px;padding:0.7rem;font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;cursor:pointer;margin-top:0.6rem;margin-bottom:0.4rem;background:rgba(248,244,255,0.9);color:#7a3fc0;}
+.mb:hover{background:#ede5ff;}
+.qg{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.qc{border-radius:12px;padding:0.8rem 0.55rem;text-align:center;cursor:pointer;border:none;}
+.qc:hover{transform:translateY(-3px);}
+.qc1{background:#FF9A3C;}.qc2{background:#1D9E75;}.qc3{background:#9B5DE5;}.qc4{background:#3A86FF;}.qc5{background:#F72585;}.qc6{background:#FFB703;}
+.qi{font-size:1.5rem;display:block;margin-bottom:3px;}
+.qtit{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.8rem;color:#fff;margin-bottom:1px;}
+.qsub{font-size:9px;color:rgba(255,255,255,0.88);font-weight:700;}
+.det{background:rgba(240,234,250,0.95);border-radius:11px;padding:1rem;margin-top:0.7rem;border:1px solid #c9b8f0;}
+.detT{font-family:'Baloo 2',cursive;font-size:0.95rem;font-weight:800;color:#3c2a7a;margin-bottom:0.6rem;}
+.dlb{font-weight:700;color:#7a6aaa;font-size:9px;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
+.di{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:0.6rem;}
+.dp{background:#fff;border:1px solid #c9b8f0;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:700;color:#3c2a7a;}
+.sp2{background:#e1f5ee;border:1px solid #5DCAA5;border-radius:50px;padding:2px 8px;font-size:10px;font-weight:700;color:#085041;}
+.cb{background:#fff;border:1px solid #c9b8f0;border-radius:7px;padding:0.35rem 0.7rem;font-family:'Baloo 2',cursive;font-size:0.78rem;font-weight:800;cursor:pointer;color:#7a6aaa;margin-top:0.4rem;}
+.nb2{background:#FF6B6B;color:#fff;font-size:8px;font-weight:800;padding:1px 5px;border-radius:50px;margin-left:3px;vertical-align:middle;}
+.vbadge{font-size:8px;font-weight:800;padding:1px 5px;border-radius:50px;margin-left:3px;vertical-align:middle;}
+.vbs{background:#FFB703;color:#fff;}.vbr{background:#3A86FF;color:#fff;}.vbn{background:#a0d0ff;color:#333;}.vbv{background:#FF6B6B;color:#fff;}
+.db{border-radius:17px;padding:1.5rem;margin-bottom:1.1rem;position:relative;overflow:hidden;}
+.db.d0{background:linear-gradient(135deg,#FF6B6B,#FF9A3C);}
+.db.d1{background:linear-gradient(135deg,#9B5DE5,#3A86FF);}
+.db.d2{background:linear-gradient(135deg,#1D9E75,#3A86FF);}
+.db.d3{background:linear-gradient(135deg,#F72585,#9B5DE5);}
+.db.d4{background:linear-gradient(135deg,#FFB703,#FF9A3C);}
+.db.d5{background:linear-gradient(135deg,#3A86FF,#1D9E75);}
+.db.d6{background:linear-gradient(135deg,#FF6B6B,#F72585);}
+.db::before{content:'';position:absolute;top:-35px;right:-35px;width:130px;height:130px;background:rgba(255,255,255,0.12);border-radius:50%;}
+.dlbl3{font-family:'Baloo 2',cursive;font-size:0.68rem;font-weight:800;color:rgba(255,255,255,0.85);text-transform:uppercase;letter-spacing:1px;position:relative;z-index:1;display:flex;align-items:center;gap:5px;margin-bottom:6px;}
+.ddot{width:6px;height:6px;border-radius:50%;background:#fff;animation:bl 1.5s ease-in-out infinite;}
+@keyframes bl{0%,100%{opacity:1;}50%{opacity:0.3;}}
+.dtit{font-family:'Baloo 2',cursive;font-size:1.4rem;font-weight:800;color:#fff;line-height:1.1;margin-bottom:4px;position:relative;z-index:1;}
+.ddesc{font-size:11px;color:rgba(255,255,255,0.92);font-weight:700;line-height:1.5;position:relative;z-index:1;margin-bottom:10px;}
+.dmeta{display:flex;gap:7px;margin-bottom:10px;position:relative;z-index:1;flex-wrap:wrap;}
+.dpill2{background:rgba(255,255,255,0.2);border-radius:50px;padding:3px 9px;font-size:10px;font-weight:700;color:#fff;}
+.dbtns{display:flex;gap:7px;position:relative;z-index:1;}
+.klb{background:#fff;border:none;border-radius:50px;padding:0.55rem 1.1rem;font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;cursor:pointer;color:#333;}
+.klb:hover{transform:scale(1.04);}
+.klb.k{color:#1D9E75;}
+.delb{background:rgba(255,255,255,0.2);border:2px solid rgba(255,255,255,0.4);border-radius:50px;padding:0.55rem 0.9rem;font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;cursor:pointer;color:#fff;}
+.strkw{display:flex;align-items:center;gap:5px;margin-top:9px;position:relative;z-index:1;background:rgba(255,255,255,0.15);border-radius:50px;padding:4px 11px;width:fit-content;}
+.hc{background:rgba(255,255,255,0.92);border-radius:13px;padding:1rem;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.8);}
+.hgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;}
+.hd{border-radius:8px;padding:6px 3px;text-align:center;border:2px solid #e0e0e0;background:#f9f9f9;}
+.hd.k{background:#1D9E75;border-color:#1D9E75;}
+.hd.id{border-color:#9B5DE5;background:#f0eaff;}
+.hd.k.id{background:#1D9E75;border-color:#fff;box-shadow:0 0 0 3px #9B5DE5;}
+.hem{font-size:0.85rem;display:block;margin-bottom:1px;}
+.hlb{font-size:8px;font-weight:700;color:#aaa;}
+.hd.k .hlb{color:rgba(255,255,255,0.85);}
+.ssr{background:rgba(255,255,255,0.92);border-radius:12px;padding:0.9rem;border:1px solid rgba(255,255,255,0.8);cursor:pointer;}
+.ssr:hover{border-color:#9B5DE5;transform:translateY(-2px);}
+.srtit{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;}
+.srd{font-size:10px;color:#777;font-weight:700;line-height:1.4;}
+.srtags{display:flex;gap:3px;margin-top:5px;flex-wrap:wrap;}
+.st{font-size:8px;font-weight:800;padding:1px 6px;border-radius:50px;}
+.st-s{background:#E5F5FF;color:#1a6ea8;}
+.st-g{background:#E5FFE5;color:#1a6e3a;}
+.st-h{background:#f0eaff;color:#7b2fbe;}
+.fc-row{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1.1rem;}
+.fc3{background:rgba(255,255,255,0.9);border:2px solid #e0e0e0;border-radius:50px;padding:4px 11px;font-family:'Nunito',sans-serif;font-size:11px;font-weight:700;color:#666;cursor:pointer;}
+.fc3:hover{border-color:#9B5DE5;}
+.fc3.on{border-color:#9B5DE5;background:#9B5DE5;color:#fff;}
+.ss2{position:relative;margin-bottom:1.1rem;}
+.ss2i{width:100%;border:2px solid #e0e0e0;border-radius:12px;padding:0.8rem 1rem 0.8rem 2.7rem;font-size:14px;font-weight:700;font-family:'Nunito',sans-serif;color:#333;outline:none;background:#fff;}
+.ss2i:focus{border-color:#9B5DE5;}
+.ss2icon{position:absolute;left:11px;top:50%;transform:translateY(-50%);font-size:1rem;}
+.rg{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:9px;}
+.hl2{background:rgba(255,255,245,0.9);border-radius:3px;padding:0 2px;}
+.ph{border-radius:17px;padding:1.7rem;text-align:center;margin-bottom:1.2rem;position:relative;overflow:hidden;background:linear-gradient(135deg,#9B5DE5,#F72585);}
+.ph::before{content:'';position:absolute;top:-35px;left:-35px;width:130px;height:130px;background:rgba(255,255,255,0.1);border-radius:50%;}
+.pp{width:78px;height:78px;border-radius:50%;display:block;margin:0 auto 8px;position:relative;z-index:1;border:4px solid #fff;}
+.pn{font-family:'Baloo 2',cursive;font-size:1.5rem;font-weight:800;color:#fff;position:relative;z-index:1;}
+.pu2{font-size:11px;color:rgba(255,255,255,0.8);font-weight:700;position:relative;z-index:1;margin-top:2px;}
+.pstats{display:flex;justify-content:center;gap:1.8rem;margin-top:0.8rem;position:relative;z-index:1;}
+.psn{font-family:'Baloo 2',cursive;font-size:1.2rem;font-weight:800;color:#fff;display:block;line-height:1;}
+.psl{font-size:9px;color:rgba(255,255,255,0.8);font-weight:700;}
+.pg{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem;}
+@media(max-width:600px){.pg{grid-template-columns:1fr;}}
+.pc2{background:rgba(255,255,255,0.92);border-radius:13px;padding:1.1rem;border:1px solid rgba(255,255,255,0.8);}
+.pct{font-family:'Baloo 2',cursive;font-size:0.85rem;font-weight:800;color:#333;margin-bottom:8px;}
+.fe{text-align:center;padding:0.8rem;color:#bbb;font-weight:700;font-size:10px;}
+.fi{background:rgba(255,255,255,0.92);border-radius:9px;padding:0.55rem 0.85rem;margin-bottom:5px;border:1px solid rgba(255,255,255,0.8);display:flex;align-items:center;gap:7px;}
+.fii{font-size:1.1rem;}
+.fit{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.8rem;color:#333;flex:1;}
+.frm{background:none;border:none;font-size:0.9rem;cursor:pointer;color:#ccc;}
+.frm:hover{color:#FF6B6B;}
+.ptag{background:#f0eaff;border:1px solid #c9b8f0;border-radius:50px;padding:2px 7px;font-size:10px;font-weight:700;color:#7b2fbe;display:inline-block;margin:2px;}
+.vc{background:rgba(255,255,255,0.92);border-radius:13px;padding:1.1rem;border:1px solid rgba(255,255,255,0.8);margin-bottom:1rem;}
+.vs2{display:flex;gap:6px;margin-bottom:0.8rem;}
+.vsi{flex:1;border:2px solid #e0e0e0;border-radius:9px;padding:0.5rem 0.75rem;font-size:12px;font-weight:700;font-family:'Nunito',sans-serif;color:#333;outline:none;}
+.vsi:focus{border-color:#9B5DE5;}
+.vsb{background:#9B5DE5;color:#fff;border:none;border-radius:9px;padding:0.5rem 0.85rem;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;cursor:pointer;}
+.vitem{display:flex;align-items:center;gap:9px;padding:0.6rem 0;border-bottom:1px solid #f0f0f0;}
+.vitem:last-child{border-bottom:none;}
+.vav{width:36px;height:36px;border-radius:50%;flex-shrink:0;border:2px solid #9B5DE5;}
+.vif{flex:1;}
+.vn{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;}
+.vun{font-size:9px;color:#999;font-weight:700;}
+.vb3{border:none;border-radius:7px;padding:4px 9px;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.72rem;cursor:pointer;}
+.vb3.ac{background:#1D9E75;color:#fff;}
+.vb3.af{background:#eee;color:#888;margin-left:3px;}
+.vb3.af:hover{background:#FF6B6B;color:#fff;}
+.vb3.ud{background:linear-gradient(90deg,#FF6B6B,#FFB703);color:#fff;}
+.vb3.fj{background:#eee;color:#888;margin-left:3px;}
+.vb3.fj:hover{background:#FF6B6B;color:#fff;}
+.vb3.aw{background:#f5f0ff;color:#9B5DE5;border:1px solid #c9b8f0;cursor:default;}
+.ve{text-align:center;padding:0.7rem;color:#bbb;font-weight:700;font-size:10px;}
+.vlb{font-size:10px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.5px;margin:7px 0 4px;}
+.sr2{background:#f8f4ff;border-radius:9px;padding:0.65rem;margin-bottom:0.65rem;border:1px solid #c9b8f0;}
+.sab{background:linear-gradient(90deg,#9B5DE5,#3A86FF);color:#fff;border:none;border-radius:7px;padding:4px 10px;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.75rem;cursor:pointer;}
+.ab{display:block;width:100%;border:none;border-radius:11px;padding:0.78rem;font-family:'Baloo 2',cursive;font-size:0.9rem;font-weight:800;cursor:pointer;margin-top:0.65rem;color:#fff;}
+.ab.p{background:#9B5DE5;}
+.ab.p:hover{opacity:0.88;}
+.ab.r{background:#eee;color:#999;border:1px solid #ddd;}
+.ab.r:hover{background:#FF6B6B;color:#fff;border-color:#FF6B6B;}
+.mo{position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,0.55);display:flex;align-items:center;justify-content:center;z-index:1000;backdrop-filter:blur(4px);}
+.mb2{background:#fff;border-radius:22px;padding:1.7rem;max-width:450px;width:92%;box-shadow:0 20px 60px rgba(0,0,0,0.3);position:relative;max-height:88vh;overflow-y:auto;}
+.mt{font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#333;margin-bottom:0.2rem;text-align:center;}
+.msub{font-size:11px;color:#999;font-weight:700;text-align:center;margin-bottom:1.1rem;}
+.ml{font-family:'Baloo 2',cursive;font-size:0.82rem;font-weight:800;color:#555;margin-bottom:5px;display:block;}
+.mi{width:100%;border:2px solid #e0e0e0;border-radius:10px;padding:0.65rem 0.85rem;font-size:13px;font-weight:700;font-family:'Nunito',sans-serif;color:#333;outline:none;margin-bottom:0.9rem;}
+.mi:focus{border-color:#9B5DE5;}
+.merr{color:#e05a2b;font-size:10px;font-weight:700;margin-top:-7px;margin-bottom:7px;min-height:14px;}
+.mc{position:absolute;top:12px;right:13px;background:none;border:none;font-size:1.2rem;cursor:pointer;color:#aaa;}
+.mbtn{width:100%;background:linear-gradient(90deg,#9B5DE5,#3A86FF);color:#fff;border:none;border-radius:11px;padding:0.85rem;font-family:'Baloo 2',cursive;font-size:1.05rem;font-weight:800;cursor:pointer;margin-bottom:0.5rem;}
+.mbtn:hover{opacity:0.9;}
+.mtabs{display:flex;gap:6px;margin-bottom:1.1rem;}
+.mtab{flex:1;padding:0.5rem;border-radius:9px;border:2px solid #e0e0e0;background:#fff;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.78rem;color:#888;cursor:pointer;text-align:center;}
+.mtab.on{border-color:#9B5DE5;background:#9B5DE5;color:#fff;}
+.tp{display:none;}.tp.on{display:block;}
+.uz{border:3px dashed #c9b8f0;border-radius:13px;padding:1.2rem;text-align:center;cursor:pointer;background:#f8f4ff;margin-bottom:0.85rem;}
+.uz:hover{border-color:#9B5DE5;background:#f0eaff;}
+.uz input{display:none;}
+.up{width:68px;height:68px;border-radius:50%;object-fit:cover;border:3px solid #9B5DE5;margin:0 auto 0.5rem;display:block;}
+.uic{font-size:2rem;display:block;margin-bottom:4px;}
+.utx{font-size:11px;font-weight:700;color:#9B5DE5;}
+.av-d{display:flex;flex-direction:column;gap:9px;}
+.av-p{width:68px;height:68px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.9rem;margin:0 auto 3px;border:3px solid #9B5DE5;}
+.dlb2{font-size:9px;font-weight:700;color:#999;text-transform:uppercase;letter-spacing:0.5px;margin-bottom:3px;}
+.eg{display:grid;grid-template-columns:repeat(8,1fr);gap:4px;}
+.eo{border-radius:6px;border:2px solid transparent;padding:2px;cursor:pointer;text-align:center;font-size:1rem;}
+.eo:hover{border-color:#9B5DE5;}
+.eo.sel{border-color:#9B5DE5;background:#f0eaff;}
+.cg{display:flex;gap:6px;flex-wrap:wrap;}
+.co{width:23px;height:23px;border-radius:50%;cursor:pointer;border:3px solid transparent;}
+.co:hover{transform:scale(1.15);}
+.co.sel{border-color:#333;}
+.vph{border-radius:13px;padding:1.2rem;text-align:center;margin-bottom:0.9rem;background:linear-gradient(135deg,#3A86FF,#1D9E75);position:relative;overflow:hidden;}
+.pm{background:#f8f4ff;border:1px solid #c9b8f0;border-radius:9px;padding:0.8rem;text-align:center;color:#7b2fbe;font-size:11px;font-weight:700;}
+.ul{display:flex;flex-direction:column;gap:6px;max-height:260px;overflow-y:auto;}
+.ui{display:flex;align-items:center;gap:8px;padding:6px 8px;border-radius:8px;border:2px solid #e0e0e0;cursor:pointer;}
+.ui:hover{border-color:#FF9A3C;background:#fffbe5;}
+.ui.sel{border-color:#FF9A3C;background:#fff3e0;}
+.uii{font-size:1.1rem;}
+.uit{font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;flex:1;}
+.usb{width:100%;background:linear-gradient(90deg,#FF6B6B,#FFB703);color:#fff;border:none;border-radius:10px;padding:0.82rem;font-family:'Baloo 2',cursive;font-size:1rem;font-weight:800;cursor:pointer;margin-top:0.85rem;}
+.gem-info{background:rgba(255,255,255,0.85);border-radius:10px;padding:0.6rem 1rem;margin-bottom:1rem;border:1px solid rgba(155,93,229,0.2);display:flex;align-items:center;gap:8px;font-size:11px;font-weight:700;color:#9B5DE5;}
+.toast{position:fixed;top:65px;left:50%;transform:translateX(-50%);background:#9B5DE5;color:#fff;padding:0.6rem 1.3rem;border-radius:50px;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.9rem;z-index:999;box-shadow:0 4px 20px rgba(155,93,229,0.4);transition:opacity 0.5s;pointer-events:none;white-space:nowrap;}
+footer{background:rgba(45,45,45,0.95);padding:1rem 2rem;text-align:center;margin-top:2rem;}
+footer p{font-size:11px;color:#aaa;font-family:'Nunito',sans-serif;font-weight:700;}
+</style>
+</head>
+<body>
+
+<div id="pmod" class="mo" style="display:none;"><div class="mb2"><button class="mc" onclick="closeMod()">✕</button><div class="mt" id="mod-t">👤 Opret din profil</div><div class="msub">Vælg navn, brugernavn og profilbillede</div><label class="ml">Dit navn</label><input class="mi" id="mn" type="text" placeholder="Skriv dit navn..." maxlength="20"><label class="ml">Brugernavn</label><input class="mi" id="mun" type="text" placeholder="fx coolbruger123" maxlength="20" oninput="this.value=this.value.toLowerCase().replace(/[^a-z0-9_]/g,'')"><div class="merr" id="merr"></div><label class="ml">Profilbillede</label><div class="mtabs"><button class="mtab on" onclick="swT('up')">📷 Upload foto</button><button class="mtab" onclick="swT('av')">🎨 Design avatar</button></div><div class="tp on" id="tp-up"><div class="uz" onclick="document.getElementById('fi').click()"><input type="file" id="fi" accept="image/*" onchange="hFoto(event)"><img id="uprev" class="up" src="" style="display:none;"><span class="uic" id="uic">📷</span><div class="utx">Klik for at uploade et foto</div></div></div><div class="tp" id="tp-av"><div class="av-d"><div class="av-p" id="avp" style="background:#9B5DE5;">🦊</div><div><div class="dlb2">Vælg emoji</div><div class="eg"><div class="eo sel" onclick="sEm(this,'🦊')">🦊</div><div class="eo" onclick="sEm(this,'🐸')">🐸</div><div class="eo" onclick="sEm(this,'🐼')">🐼</div><div class="eo" onclick="sEm(this,'🦁')">🦁</div><div class="eo" onclick="sEm(this,'🐨')">🐨</div><div class="eo" onclick="sEm(this,'🦄')">🦄</div><div class="eo" onclick="sEm(this,'🐙')">🐙</div><div class="eo" onclick="sEm(this,'🐬')">🐬</div><div class="eo" onclick="sEm(this,'🦋')">🦋</div><div class="eo" onclick="sEm(this,'🐲')">🐲</div><div class="eo" onclick="sEm(this,'🌟')">🌟</div><div class="eo" onclick="sEm(this,'🎉')">🎉</div><div class="eo" onclick="sEm(this,'🎸')">🎸</div><div class="eo" onclick="sEm(this,'⚽')">⚽</div><div class="eo" onclick="sEm(this,'🎨')">🎨</div><div class="eo" onclick="sEm(this,'🍕')">🍕</div></div></div><div><div class="dlb2">Baggrundsfarve</div><div class="cg"><div class="co sel" style="background:#9B5DE5;" onclick="sCol(this,'#9B5DE5')"></div><div class="co" style="background:#FF6B6B;" onclick="sCol(this,'#FF6B6B')"></div><div class="co" style="background:#FF9A3C;" onclick="sCol(this,'#FF9A3C')"></div><div class="co" style="background:#FFB703;" onclick="sCol(this,'#FFB703')"></div><div class="co" style="background:#1D9E75;" onclick="sCol(this,'#1D9E75')"></div><div class="co" style="background:#3A86FF;" onclick="sCol(this,'#3A86FF')"></div><div class="co" style="background:#F72585;" onclick="sCol(this,'#F72585')"></div><div class="co" style="background:#333;" onclick="sCol(this,'#333')"></div></div></div></div></div><button class="mbtn" id="mcb" onclick="createUser()" style="margin-top:1rem;">Opret profil ➜</button></div></div>
+
+<div id="venmod" class="mo" style="display:none;"><div class="mb2"><button class="mc" onclick="document.getElementById('venmod').style.display='none'">✕</button><div class="vph"><canvas id="vmcan" width="68" height="68" style="border-radius:50%;border:3px solid #fff;display:block;margin:0 auto 7px;position:relative;z-index:1;"></canvas><div style="font-family:'Baloo 2',cursive;font-size:1.3rem;font-weight:800;color:#fff;position:relative;z-index:1;" id="vmn">—</div><div style="font-size:11px;color:rgba(255,255,255,0.8);font-weight:700;position:relative;z-index:1;" id="vmun">—</div></div><div class="pm">🔒 Gemte favoritter er private — kun du kan se dine egne</div></div></div>
+
+<div id="umod" class="mo" style="display:none;"><div class="mb2"><button class="mc" onclick="document.getElementById('umod').style.display='none'">✕</button><div class="mt">🏆 Udfordr <span id="uvn">—</span></div><div class="msub">Vælg en aktivitet I skal prøve!</div><div class="ul" id="ul"></div><button class="usb" onclick="sendU()">Send udfordring! 🎉</button></div></div>
+
+<div id="toast" class="toast" style="display:none;opacity:0;"></div>
+
+<nav class="nav">
+  <div class="logo" onclick="show('p0')">🎉 Ingen Kedsomhed!</div>
+  <div class="sw" id="nsw">
+    <input class="si" id="nsi" placeholder="🔍 Søg aktivitet..." autocomplete="off" oninput="nSøg(this.value)" onfocus="if(this.value.length>1)visDd(this.value)" onkeydown="if(event.key==='Enter'){gSøg(this.value);this.blur();}if(event.key==='Escape'){hDd();this.blur();}">
+    <span class="s-icon">🔍</span>
+    <div class="sdd" id="ndd"></div>
+  </div>
+  <div class="nlinks">
+    <span class="nl on" id="nl0" onclick="show('p0')">Hjem</span>
+    <span class="nl" id="nl1" onclick="show('p1')">Guide</span>
+    <span class="nl" id="nl2" onclick="show('pD')">Dagens</span>
+    <span class="nl" id="nl3" onclick="gSøg('')">Søg</span>
+    <button class="pnb" id="pnbtn" onclick="show('pP')" style="display:none;">
+      <canvas id="nav-av" width="24" height="24" style="border-radius:50%;border:2px solid #fff;"></canvas>
+      <span class="pnn" id="nav-n">Profil</span>
+      <span class="nb" id="nav-nb" style="display:none;">0</span>
+    </button>
+  </div>
+</nav>
+
+<div class="pb" id="pb">
+  <div style="display:flex;align-items:center;"><div class="pc" id="pc1">1</div><span class="pl" id="pl1">Om dig</span></div>
+  <div class="pline" id="pln1"></div>
+  <div style="display:flex;align-items:center;"><div class="pc" id="pc2">2</div><span class="pl" id="pl2">Antal</span></div>
+  <div class="pline" id="pln2"></div>
+  <div style="display:flex;align-items:center;"><div class="pc" id="pc3">3</div><span class="pl" id="pl3">Ideer</span></div>
+</div>
+
+<div id="p0" class="page on"><div class="start"><div class="conf">🎊 🎈 🌈 🎈 🎊</div><div class="skilt"><span class="sr">Ingen Kedsomhed!</span><div class="ss">Her finder du altid noget sjovt at lave 😄</div></div><div id="s-ud" class="sbtns"><button class="smb" onclick="openMod()">👤 Opret bruger og kom i gang!</button><button class="sgb" onclick="show('p1')">Fortsæt uden konto →</button></div><div id="s-in" style="display:none;width:100%;max-width:360px;"><div class="lw"><canvas id="la-can" width="58" height="58" class="la"></canvas><div class="ln" id="ln">—</div><div class="ls">Klar til sjov? 😄</div></div><div class="sbtns"><button class="smb" onclick="show('p1')">🎉 Kom i gang!</button><button class="s2b" style="background:linear-gradient(90deg,#FF6B6B,#FFB703);" onclick="show('pD')">⚡ Dagens udfordring!</button><button class="sgb" onclick="show('pP')">👤 Min profil</button></div></div><div style="font-size:1.2rem;margin-top:1.2rem;letter-spacing:0.4rem;opacity:0.7;">⭐ ✨ 🌟 ✨ ⭐</div></div></div>
+
+<div id="p1" class="page"><div class="cw"><div class="hb hb-m"><h1 id="p1h">🎉 Lad os finde ideer!</h1><p id="p1p">Fortæl lidt om dig selv</p></div><div class="tc"><div class="card"><div class="fw"><label class="fl">Hvor gammel er du?</label><div class="cr"><button class="ac" onclick="sAge(this,'3-5')">3–5 år</button><button class="ac" onclick="sAge(this,'6-8')">6–8 år</button><button class="ac" onclick="sAge(this,'9-11')">9–11 år</button><button class="ac" onclick="sAge(this,'12-14')">12–14 år</button><button class="ac" onclick="sAge(this,'15-17')">15–17 år</button><button class="ac" onclick="sAge(this,'18+')">18+ år</button></div><div class="err" id="ea"></div></div><div class="fw"><label class="fl">Hvad er dine hobbyer?</label><div class="hcat"><span class="hcl a">🏅 Aktiv</span><div class="hg"><div class="hb2" data-h="sport" onclick="tH(this,'sport')"><span class="hi2">⚽</span><span class="hl">Sport</span></div><div class="hb2" data-h="svømning" onclick="tH(this,'svømning')"><span class="hi2">🏊</span><span class="hl">Svømning</span></div><div class="hb2" data-h="ridning" onclick="tH(this,'ridning')"><span class="hi2">🐴</span><span class="hl">Ridning</span></div><div class="hb2" data-h="skateboard" onclick="tH(this,'skateboard')"><span class="hi2">🛹</span><span class="hl">Skateboard</span></div><div class="hb2" data-h="natur" onclick="tH(this,'natur')"><span class="hi2">🌿</span><span class="hl">Natur</span></div><div class="hb2" data-h="yoga" onclick="tH(this,'yoga')"><span class="hi2">🧘</span><span class="hl">Yoga</span></div></div></div><div class="hcat"><span class="hcl k">🎨 Kreativ</span><div class="hg"><div class="hb2" data-h="kunst" onclick="tH(this,'kunst')"><span class="hi2">🎨</span><span class="hl">Kunst</span></div><div class="hb2" data-h="musik" onclick="tH(this,'musik')"><span class="hi2">🎵</span><span class="hl">Musik</span></div><div class="hb2" data-h="dans" onclick="tH(this,'dans')"><span class="hi2">💃</span><span class="hl">Dans</span></div><div class="hb2" data-h="teater" onclick="tH(this,'teater')"><span class="hi2">🎭</span><span class="hl">Teater</span></div><div class="hb2" data-h="foto" onclick="tH(this,'foto')"><span class="hi2">📸</span><span class="hl">Foto</span></div><div class="hb2" data-h="håndværk" onclick="tH(this,'håndværk')"><span class="hi2">🔨</span><span class="hl">Håndværk</span></div><div class="hb2" data-h="madlavning" onclick="tH(this,'madlavning')"><span class="hi2">🍳</span><span class="hl">Madlavning</span></div></div></div><div class="hcat"><span class="hcl r">📚 Rolig</span><div class="hg"><div class="hb2" data-h="læsning" onclick="tH(this,'læsning')"><span class="hi2">📚</span><span class="hl">Læsning</span></div><div class="hb2" data-h="rollespil" onclick="tH(this,'rollespil')"><span class="hi2">🧙</span><span class="hl">Rollespil</span></div><div class="hb2" data-h="lego" onclick="tH(this,'lego')"><span class="hi2">🧩</span><span class="hl">LEGO</span></div><div class="hb2" data-h="brætspil" onclick="tH(this,'brætspil')"><span class="hi2">🎲</span><span class="hl">Brætspil</span></div></div></div><div class="hcat"><span class="hcl s">🤝 Social</span><div class="hg"><div class="hb2" data-h="venner" onclick="tH(this,'venner')"><span class="hi2">🤝</span><span class="hl">Venner</span></div></div></div><div class="err" id="eh"></div></div><button class="vb" onclick="go2()">Videre ➜ 🎉</button></div><div style="display:flex;flex-direction:column;gap:8px;"><div class="fc2 o"><span class="fc-i">🧠</span><div class="fct">Vidste du?</div><div class="fctx">Kedsomhed er godt for hjernen!</div></div><div class="fc2 t"><span class="fc-i">🎯</span><div class="fct">Tip!</div><div class="fctx">Jo flere hobbyer, jo mere personlige ideer!</div></div><div class="fc2 p"><span class="fc-i">⚡</span><div class="fct">Hurtigt eller langsomt?</div><div class="fctx">Ideer til alt fra 10 min til en hel eftermiddag!</div></div><div class="ctr"><div class="ctrc"><span class="ctrn">100+</span><span class="ctrl">Aktiviteter</span></div><div class="ctrc"><span class="ctrn">24</span><span class="ctrl">Hobbyer</span></div><div class="ctrc"><span class="ctrn">6</span><span class="ctrl">Aldre</span></div></div></div></div></div></div>
+
+<div id="p2" class="page"><div class="cw"><div class="hb hb-p"><h1>👥 Hvor mange er I?</h1><p>Alene eller med nogen?</p></div><div class="tc"><div class="card"><label class="fl">Vælg antal</label><div class="gg"><div class="gb" onclick="sGrp(this,'1')"><span class="gbi">🧍</span><div class="gbl">Kun mig</div><div class="gbs">1 person</div></div><div class="gb" onclick="sGrp(this,'2')"><span class="gbi">👫</span><div class="gbl">Os to</div><div class="gbs">2 personer</div></div><div class="gb" onclick="sGrp(this,'3-5')"><span class="gbi">👨‍👩‍👧</span><div class="gbl">Lille gruppe</div><div class="gbs">3–5 pers.</div></div><div class="gb" onclick="sGrp(this,'6+')"><span class="gbi">🎉</span><div class="gbl">Stor gruppe</div><div class="gbs">6 eller flere</div></div></div><div class="err" id="eg"></div><button class="vb" onclick="go3()">Videre ➜ 🎉</button><button class="tb" onclick="show('p1')">← Tilbage</button></div><div style="display:flex;flex-direction:column;gap:8px;"><div class="fc2 o"><span class="fc-i">🏆</span><div class="fct">Tip til grupper</div><div class="fctx">Er I mange? Konkurrencer er perfekte!</div></div><div class="fc2 b"><span class="fc-i">🧍</span><div class="fct">Alene er fedt!</div><div class="fctx">Mange af de bedste aktiviteter laver man alene.</div></div></div></div></div></div>
+
+<div id="p3" class="page"><div class="cw"><div class="hb hb-t"><h1 id="p3h">Her er dine ideer!</h1><p>Tryk ❤️ for at gemme som favorit</p></div><div class="vs"><label class="vt">🌤 Hvad er vejret? (valgfrit)</label><div class="vg"><div class="vbtn" onclick="sVejr(this,'sol')"><span class="vi2">☀️</span><span class="vl2">Solskin</span></div><div class="vbtn" onclick="sVejr(this,'regn')"><span class="vi2">🌧️</span><span class="vl2">Regn</span></div><div class="vbtn" onclick="sVejr(this,'sne')"><span class="vi2">❄️</span><span class="vl2">Sne</span></div><div class="vbtn" onclick="sVejr(this,'varmt')"><span class="vi2">🌞</span><span class="vl2">Sommer</span></div></div></div><div class="sb"><div class="si2"><span class="sk">Alder</span><span class="sv" id="sa">—</span></div><div class="si2"><span class="sk">Hobbyer</span><span class="sv" id="sh">—</span></div><div class="si2"><span class="sk">Antal</span><span class="sv" id="sg">—</span></div></div><div class="sct" id="ilbl">Ideer til dig</div><div class="il" id="il"></div><div class="il" id="el"></div><button class="mb" id="mb" onclick="showMore()">✨ Flere ideer</button><div class="sct">Aktivitetskort — tryk for detaljer</div><div class="qg" id="qg"></div><div id="detbox" style="display:none;"></div><button class="tb" onclick="show('p2')" style="margin-right:8px;">← Ændr svar</button><button class="tb" style="color:#FF6B6B;border-color:#FF6B6B;" onclick="startForfra()">🔄 Start forfra</button></div></div>
+
+<div id="pD" class="page"><div class="cw"><div class="db" id="dban"><div class="dlbl3"><div class="ddot"></div>Dagens udfordring</div><div class="dtit" id="dtit">—</div><div class="ddesc" id="ddesc">—</div><div class="dmeta" id="dmeta"></div><div class="dbtns"><button class="klb" id="klb" onclick="mKlaret()">Jeg har gjort det! ✅</button><button class="delb" onclick="dDel()">Del med ven 📤</button></div><div class="strkw"><span>🔥</span><span style="font-size:11px;font-weight:700;color:#fff;" id="strtxt">0 dages streak</span></div></div><div class="hc"><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.85rem;color:#333;margin-bottom:7px;">📅 Din uge</div><div class="hgrid" id="hgrid"></div></div><div style="background:rgba(255,255,255,0.92);border-radius:13px;padding:1rem;margin-bottom:1rem;border:1px solid rgba(255,255,255,0.8);"><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.85rem;color:#333;margin-bottom:7px;">🗓 Kommende</div><div id="klist"></div></div><button class="tb" onclick="show('p0')">← Tilbage</button></div></div>
+
+<div id="pS" class="page"><div class="cw"><div class="hb hb-b"><h1>🔍 Søg aktiviteter</h1><p>Find noget sjovt at lave</p></div><div class="ss2"><span class="ss2icon">🔍</span><input class="ss2i" id="ssi" placeholder="fx 'bage', 'tegne', 'bold', 'natur'..." oninput="storS(this.value)" autocomplete="off"></div><div class="fc-row"><button class="fc3 on" onclick="togF(this,'alle')">Alle</button><button class="fc3" onclick="togF(this,'solo')">🧍 Alene</button><button class="fc3" onclick="togF(this,'gruppe')">👥 Gruppe</button><button class="fc3" onclick="togF(this,'udendørs')">🌿 Udendørs</button><button class="fc3" onclick="togF(this,'indendørs')">🏠 Indendørs</button><button class="fc3" onclick="togF(this,'kreativ')">🎨 Kreativ</button><button class="fc3" onclick="togF(this,'aktiv')">⚽ Aktiv</button><button class="fc3" onclick="togF(this,'rolig')">📚 Rolig</button></div><div id="sc" style="font-family:'Baloo 2',cursive;font-size:0.82rem;font-weight:800;color:#9B5DE5;margin-bottom:0.8rem;display:none;"></div><div class="rg" id="rg"></div></div></div>
+
+<div id="pP" class="page"><div class="cw"><div class="gem-info">🔒 Dine data er gemt og krypteret på din enhed</div><div class="ph"><canvas id="p-av" width="78" height="78" class="pp"></canvas><div class="pn" id="pnam">—</div><div class="pu2" id="pun2">—</div><div class="pstats"><div><span class="psn" id="psf">0</span><span class="psl">Favoritter</span></div><div><span class="psn" id="psv">0</span><span class="psl">Venner</span></div><div><span class="psn" id="pss">0</span><span class="psl">🔥 Streak</span></div></div></div><div class="vc"><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.88rem;color:#333;margin-bottom:7px;">👥 Venner <span id="vnb" style="display:none;" class="nb">0</span></div><div class="vs2"><input class="vsi" id="vsi" placeholder="Søg brugernavn... fx sofia123" oninput="søgV()"><button class="vsb" onclick="søgV()">Søg</button></div><div id="srvrap" style="display:none;"></div><div id="anmwrap" style="display:none;"><div class="vlb">📬 Anmodninger</div><div id="anml"></div></div><div><div class="vlb">Dine venner</div><div id="vl"><div class="ve">Ingen venner endnu. Prøv: <b>sofia123</b></div></div></div></div><div class="pg"><div class="pc2"><div class="pct">📋 Præferencer</div><div style="font-size:11px;color:#666;font-weight:700;" id="pal">🎂 Ikke valgt endnu</div><div style="margin-top:6px;font-size:9px;font-weight:700;color:#999;margin-bottom:3px;">Hobbyer:</div><div id="pht"><span style="font-size:10px;color:#bbb;font-weight:700;">Ingen endnu</span></div></div><div class="pc2"><div class="pct">❤️ Favoritter <span id="fc" style="font-size:10px;color:#999;">(0)</span></div><div style="font-size:9px;color:#bbb;font-weight:700;margin-bottom:6px;">🔒 Krypteret og privat</div><div id="fl2"><div class="fe">Ingen endnu</div></div></div></div><button class="ab p" onclick="openMod()">✏️ Rediger profil</button><button class="ab r" onclick="logUd()">Log ud</button></div></div>
+
+<footer><p>Lavet med kærlighed til alle der keder sig 💜 — ingenkedsomhed.dk</p></footer>
+
+<script>
+const SECRET='IK_'+btoa('IngenKedsomhed2025_privat').split('').reverse().join('');
+function kryptér(d){const j=JSON.stringify(d);const e=btoa(unescape(encodeURIComponent(j)));let r='';for(let i=0;i<e.length;i++){r+=String.fromCharCode(e.charCodeAt(i)^SECRET.charCodeAt(i%SECRET.length));}return btoa(r);}
+function dekryptér(s){try{const d=atob(s);let r='';for(let i=0;i<d.length;i++){r+=String.fromCharCode(d.charCodeAt(i)^SECRET.charCodeAt(i%SECRET.length));}return JSON.parse(decodeURIComponent(escape(atob(r))));}catch(e){return null;}}
+function gemAlt(){try{localStorage.setItem('ik_data',kryptér({user,streak,klaretIDag,sidstKlaretDato}));}catch(e){}}
+function indlæsAlt(){try{const raw=localStorage.getItem('ik_data');if(!raw)return;const data=dekryptér(raw);if(!data)return;if(data.user){user=data.user;user.favoritter=user.favoritter||[];user.venner=user.venner||[];user.anmodninger=user.anmodninger||[];user.sendteAnm=user.sendteAnm||[];}streak=data.streak||0;klaretIDag=data.klaretIDag||false;sidstKlaretDato=data.sidstKlaretDato||'';if(sidstKlaretDato!==new Date().toDateString())klaretIDag=false;}catch(e){}}
+let age='',hobbies=[],groupN='',vejr='',extraShown=false;
+let user=null,selEm='🦊',selCol='#9B5DE5',activeTab='upload',fotoUrl=null;
+let udfVen='',valgtUdf=null,streak=0,klaretIDag=false,sidstKlaretDato='',aktivFilter='alle';
+const demoUsers=[{name:'Sofia',username:'sofia123',emoji:'🦋',color:'#F72585'},{name:'Lucas',username:'lucas_cool',emoji:'🐲',color:'#3A86FF'},{name:'Emma',username:'emma_og',emoji:'🌟',color:'#FFB703'},{name:'Noah',username:'noah99',emoji:'🦁',color:'#1D9E75'}];
+const dagU=[{i:'🍪',t:'Bag noget du aldrig har bagt',d:'Find en opskrift der ser svær ud og prøv den!',tid:'45–90 min',plads:'Indendørs',type:'Kreativ'},{i:'🌿',t:'Find 5 ting i naturen du aldrig har set',d:'Gå en tur og brug dine øjne.',tid:'30–60 min',plads:'Udendørs',type:'Aktiv'},{i:'🎨',t:'Tegn et selvportræt uden at kigge',d:'Hold blyanten på papiret — løft den aldrig!',tid:'15–30 min',plads:'Indendørs',type:'Kreativ'},{i:'✉️',t:'Skriv et brev til dig selv om 1 år',d:'Hvad håber du er sket? Gem brevet hemmeligt.',tid:'20–40 min',plads:'Indendørs',type:'Rolig'},{i:'🏃',t:'Løb til et sted du aldrig har løbet til',d:'Vælg en destination og mål din tid!',tid:'20–45 min',plads:'Udendørs',type:'Aktiv'},{i:'🎵',t:'Lær en sang udenad på 30 minutter',d:'Memoriser alle versene og fremfør den bagefter!',tid:'30 min',plads:'Indendørs',type:'Kreativ'},{i:'🧘',t:'Sid helt stille i 10 minutter',d:'Ingen telefon, ingen musik. Bare dig og dine tanker.',tid:'10 min',plads:'Overalt',type:'Rolig'}];
+const ugedage=['Man','Tir','Ons','Tor','Fre','Lør','Søn'];
+const dIdx=new Date().getDay()===0?6:new Date().getDay()-1;
+const alleA=[{i:'🏃',t:'Løbetur med en udfordring',d:'Løb til et bestemt sted og mål din tid.',tags:['aktiv','udendørs','solo'],h:'sport'},{i:'⚽',t:'Øvetræning med bold',d:'Sæt kegler op og øv dine færdigheder.',tags:['aktiv','udendørs','solo'],h:'sport'},{i:'🏆',t:'Mini-turnering',d:'Opfind jeres eget spil med regler og point.',tags:['aktiv','udendørs','gruppe'],h:'sport'},{i:'💦',t:'Vandkrig',d:'Tag vandpistoler og hold vandkrig udendørs!',tags:['aktiv','udendørs','gruppe'],h:'sport'},{i:'🚴',t:'Cykeltur på ny rute',d:'Find en vej du aldrig har cyklet.',tags:['aktiv','udendørs','solo'],h:'sport'},{i:'🎨',t:'Tegn hvad du ser',d:'Kig ud og tegn det realistisk.',tags:['kreativ','indendørs','solo'],h:'kunst'},{i:'✂️',t:'Lav en collage',d:'Klip billeder fra blade og lav et kunstværk.',tags:['kreativ','indendørs','solo'],h:'kunst'},{i:'🎨',t:'Tegnekonkurrence',d:'Alle tegner det samme motiv — bedste vinder!',tags:['kreativ','indendørs','gruppe'],h:'kunst'},{i:'🖌️',t:'Mal med kaffe',d:'Brug te eller kaffe som maling.',tags:['kreativ','indendørs','solo'],h:'kunst'},{i:'🎵',t:'Skriv en sang',d:'Vælg et emne og skriv en tekst.',tags:['kreativ','indendørs','solo'],h:'musik'},{i:'🥁',t:'Lav din egen rytme',d:'Brug kasser og kopper som trommer.',tags:['kreativ','indendørs','solo'],h:'musik'},{i:'🎤',t:'Karaoke-kamp',d:'Syng mod hinanden!',tags:['kreativ','indendørs','gruppe'],h:'musik'},{i:'🎵',t:'Gæt melodien',d:'En nynner, resten gætter.',tags:['rolig','indendørs','gruppe'],h:'musik'},{i:'💃',t:'Lær en ny koreografi',d:'Find en dans og lær den trin for trin.',tags:['aktiv','indendørs','solo'],h:'dans'},{i:'💃',t:'Dansekonkurrence',d:'Skiftes til at dømme og give point.',tags:['aktiv','indendørs','gruppe'],h:'dans'},{i:'🌿',t:'Naturtur og opdagelse',d:'Find 10 planter, insekter eller fugle.',tags:['aktiv','udendørs','solo'],h:'natur'},{i:'🌱',t:'Plant noget',d:'Find en potte og plant et frø.',tags:['rolig','indendørs','solo'],h:'natur'},{i:'🌿',t:'Naturjagt',d:'Lav en liste — hvem finder alt først?',tags:['aktiv','udendørs','gruppe'],h:'natur'},{i:'⭐',t:'Kig på stjernerne',d:'Find stjernebilleder med en gratis app.',tags:['rolig','udendørs','solo'],h:'natur'},{i:'📖',t:'Læs en bog',d:'Sæt dig komfortabelt og læs 30 sider.',tags:['rolig','indendørs','solo'],h:'læsning'},{i:'✏️',t:'Skriv din egen historie',d:'Start på en kort historie.',tags:['kreativ','indendørs','solo'],h:'læsning'},{i:'📖',t:'Historiefortælling på skift',d:'En starter, den næste fortsætter.',tags:['kreativ','indendørs','gruppe'],h:'læsning'},{i:'🍪',t:'Bag noget nyt',d:'Find en opskrift og bag det fra bunden.',tags:['kreativ','indendørs','solo'],h:'madlavning'},{i:'🍳',t:'Opfind din egen ret',d:'Brug hvad der er i køleskabet.',tags:['kreativ','indendørs','solo'],h:'madlavning'},{i:'🍕',t:'Lav pizza fra bunden',d:'Lav jeres egne pizzaer.',tags:['kreativ','indendørs','gruppe'],h:'madlavning'},{i:'🍪',t:'Bagekonkurrence',d:'Bag det samme og bed nogen om at vurdere.',tags:['kreativ','indendørs','gruppe'],h:'madlavning'},{i:'🍦',t:'Lav hjemmelavet is',d:'Bland fløde, sukker og frugt!',tags:['kreativ','indendørs','solo'],h:'madlavning'},{i:'🎭',t:'Øv en monolog',d:'Find tekst og øv foran spejlet.',tags:['kreativ','indendørs','solo'],h:'teater'},{i:'🎭',t:'Improvisationsteater',d:'En siger en situation — resten improviserer.',tags:['kreativ','indendørs','gruppe'],h:'teater'},{i:'📸',t:'Gå på fototur',d:'Find interessante motiver.',tags:['kreativ','udendørs','solo'],h:'foto'},{i:'📸',t:'Fotojagt',d:'Giv hinanden 5 motiver.',tags:['kreativ','udendørs','gruppe'],h:'foto'},{i:'🔨',t:'Byg noget kreativt',d:'Brug kartong og tape.',tags:['kreativ','indendørs','solo'],h:'håndværk'},{i:'🏗️',t:'Byggekonkurrence',d:'Hvem kan bygge det højeste tårn?',tags:['kreativ','indendørs','gruppe'],h:'håndværk'},{i:'🏰',t:'Byg en fort',d:'Brug puder og tæpper.',tags:['kreativ','indendørs','gruppe'],h:'håndværk'},{i:'🧙',t:'Skriv en fantasy-historie',d:'Opfind en verden.',tags:['kreativ','indendørs','solo'],h:'rollespil'},{i:'🗺️',t:'Tegn et fantasykort',d:'Tegn en opdigtet verden.',tags:['kreativ','indendørs','solo'],h:'rollespil'},{i:'🧙',t:'Spil et rollespil',d:'En er fortæller, resten er helte.',tags:['kreativ','indendørs','gruppe'],h:'rollespil'},{i:'🧩',t:'Byg frit med LEGO',d:'Byg noget uden vejledning.',tags:['kreativ','indendørs','solo'],h:'lego'},{i:'🧩',t:'LEGO-konkurrence',d:'Hvem bygger det sejeste?',tags:['kreativ','indendørs','gruppe'],h:'lego'},{i:'🎲',t:'Lær et nyt kortspil',d:'Find reglerne til et kortspil.',tags:['rolig','indendørs','solo'],h:'brætspil'},{i:'🎲',t:'Brætspilsmaraton',d:'Spil 3 spil — hvem vinder flest?',tags:['rolig','indendørs','gruppe'],h:'brætspil'},{i:'🧘',t:'Prøv en yoga-rutine',d:'Find en begynder-video og følg med.',tags:['rolig','indendørs','solo'],h:'yoga'},{i:'📓',t:'Taknemmelighedsdagbog',d:'Skriv 5 ting du er taknemmelig for.',tags:['rolig','indendørs','solo'],h:'yoga'},{i:'🛹',t:'Øv nye tricks',d:'Gå udenfor og øv et trick.',tags:['aktiv','udendørs','solo'],h:'skateboard'},{i:'🛹',t:'Tricks-konkurrence',d:'Vis jeres bedste tricks.',tags:['aktiv','udendørs','gruppe'],h:'skateboard'},{i:'🐴',t:'Øv dine rideskills',d:'Lav øvelser til næste gang.',tags:['aktiv','udendørs','solo'],h:'ridning'},{i:'🏊',t:'Svøm en tur',d:'Se hvor mange baner du kan svømme.',tags:['aktiv','udendørs','solo'],h:'svømning'},{i:'✉️',t:'Skriv et brev til en ven',d:'Et håndskrevet brev.',tags:['rolig','indendørs','solo'],h:'venner'},{i:'🗣️',t:'To sande og en løgn',d:'Hvem lyver? Resten gætter!',tags:['rolig','indendørs','gruppe'],h:'venner'}];
+const ideasD={solo:{sport:[{i:'🏃',t:'Løbetur med en udfordring',d:'Løb til et bestemt sted og mål din tid!'},{i:'⚽',t:'Øvetræning',d:'Sæt kegler op og øv dine færdigheder.'}],kunst:[{i:'🎨',t:'Tegn hvad du ser',d:'Kig ud og tegn det realistisk.'},{i:'✂️',t:'Lav en collage',d:'Klip billeder og lav et kunstværk.'}],musik:[{i:'🎵',t:'Skriv en sang',d:'Vælg et emne og skriv en tekst.'},{i:'🥁',t:'Lav din egen rytme',d:'Brug kasser og kopper som trommer.'}],dans:[{i:'💃',t:'Lær en ny koreografi',d:'Find en dans og lær den trin for trin.'},{i:'🪞',t:'Dans foran spejlet',d:'Sæt yndlingssangen på og dans løs!'}],natur:[{i:'🌿',t:'Naturtur og opdagelse',d:'Find 10 planter, insekter eller fugle.'},{i:'🌱',t:'Plant noget',d:'Find en potte og plant et frø.'}],læsning:[{i:'📖',t:'Læs en bog',d:'Sæt dig komfortabelt og læs 30 sider.'},{i:'✏️',t:'Skriv din egen historie',d:'Start en kort historie.'}],madlavning:[{i:'🍪',t:'Bag noget nyt',d:'Find en opskrift og bag det.'},{i:'🍳',t:'Opfind din egen ret',d:'Brug hvad der er i køleskabet.'}],teater:[{i:'🎭',t:'Øv en monolog',d:'Find tekst og øv foran spejlet.'},{i:'🪄',t:'Lær et tryllenummer',d:'Find en simpel tryllekunst og øv den.'}],foto:[{i:'📸',t:'Gå på fototur',d:'Find interessante motiver.'},{i:'🌅',t:'Golden hour fotografi',d:'Tag billeder ved solnedgang!'}],håndværk:[{i:'🔨',t:'Byg noget kreativt',d:'Brug kartong og tape.'},{i:'🖼️',t:'Lav en billedramme',d:'Byg en ramme af kartong.'}],rollespil:[{i:'🧙',t:'Skriv en fantasy-historie',d:'Opfind en verden.'},{i:'🗺️',t:'Tegn et fantasykort',d:'Tegn en opdigtet verden.'}],lego:[{i:'🧩',t:'Byg frit med LEGO',d:'Byg noget uden vejledning!'},{i:'🧩',t:'Lav dit eget puslespil',d:'Tegn et billede og klip det i stykker.'}],brætspil:[{i:'🎲',t:'Lær et nyt kortspil',d:'Find reglerne til et nyt spil.'},{i:'📜',t:'Design dit eget brætspil',d:'Opfind regler og lav et bræt!'}],yoga:[{i:'🧘',t:'Prøv en yoga-rutine',d:'Følg med i 15 min.'},{i:'📓',t:'Taknemmelighedsdagbog',d:'Skriv 5 ting du er taknemmelig for.'}],skateboard:[{i:'🛹',t:'Øv nye tricks',d:'Gå udenfor og øv et trick.'},{i:'🚴',t:'Cykeltur på ny rute',d:'Find en vej du aldrig har cyklet.'}],ridning:[{i:'🐴',t:'Øv dine rideskills',d:'Lav øvelser til næste gang.'},{i:'✏️',t:'Tegn din drømmehest',d:'Design din drømmehest.'}],svømning:[{i:'🏊',t:'Svøm en tur',d:'Se hvor mange baner du kan svømme.'},{i:'🤽',t:'Lær ny svømmestil',d:'Øv rygcrawl eller butterfly.'}],venner:[{i:'✉️',t:'Skriv et brev til en ven',d:'Et håndskrevet brev.'},{i:'🗒️',t:'Lav en bucket list',d:'Skriv 20 ting du vil opleve.'}]},multi:{sport:[{i:'🏆',t:'Mini-turnering',d:'Opfind jeres eget spil!'},{i:'⚽',t:'Boldspil med egne regler',d:'Opfind reglerne selv.'}],kunst:[{i:'🎨',t:'Tegn hinanden uden at kigge',d:'Løft aldrig blyanten!'},{i:'🖼️',t:'Fælles kunstværk',d:'Start hver med jeres eget hjørne.'}],musik:[{i:'🎤',t:'Karaoke-kamp',d:'Syng mod hinanden!'},{i:'🎵',t:'Gæt melodien',d:'Hvem kender flest sange?'}],dans:[{i:'💃',t:'Dansekonkurrence',d:'Skiftes til at dømme.'},{i:'🕺',t:'Lær en fælles koreografi',d:'Øv og film det!'}],natur:[{i:'🌿',t:'Naturjagt',d:'Hvem finder alt først?'},{i:'🔭',t:'Stjerne-observation',d:'Find stjernebilleder.'}],læsning:[{i:'📖',t:'Historiefortælling på skift',d:'Se hvor vildt det ender!'},{i:'📚',t:'Boganbefaling-runde',d:'Alle anbefaler en bog.'}],madlavning:[{i:'🍕',t:'Lav pizza fra bunden',d:'Lav jeres egne pizzaer!'},{i:'🍪',t:'Bagekonkurrence',d:'Hvem bager bedst?'}],teater:[{i:'🎭',t:'Improvisationsteater',d:'En siger en situation.'},{i:'🎬',t:'Lav en film med kostumer',d:'Find kostumer frem.'}],foto:[{i:'📸',t:'Fotojagt',d:'Hvem tager det bedste billede?'}],håndværk:[{i:'🏗️',t:'Byggekonkurrence',d:'Hvem bygger højest?'},{i:'🏰',t:'Byg en fort',d:'Brug puder og tæpper.'}],rollespil:[{i:'🧙',t:'Spil et rollespil',d:'En er fortæller.'},{i:'🗺️',t:'Byg en verden',d:'Opfind historien.'}],lego:[{i:'🧩',t:'LEGO-konkurrence',d:'Hvem bygger sejest?'}],brætspil:[{i:'🎲',t:'Brætspilsmaraton',d:'Hvem vinder flest?'},{i:'❓',t:'Hjemmelavet quiz',d:'Hvem ved mest?'}],yoga:[{i:'🧘',t:'Fælles yoga',d:'Hjælp hinanden.'},{i:'🌬️',t:'Vejrtrækningsøvelse',d:'Ånd langsomt.'}],skateboard:[{i:'🛹',t:'Tricks-konkurrence',d:'Vis jeres bedste!'},{i:'🚴',t:'Cykelkort-udfordring',d:'Første til mål vinder!'}],ridning:[{i:'🐴',t:'Ridequiz',d:'Hvem ved mest om heste?'}],svømning:[{i:'🤽',t:'Vandleg-konkurrence',d:'Del jer i hold.'},{i:'💧',t:'Vandeksperimenter',d:'Hvad synker, hvad flyder?'}],venner:[{i:'🎭',t:'Lav et skuespil',d:'Skriv og opfør det.'},{i:'🗣️',t:'To sande og en løgn',d:'Hvem lyver?'}]}};
+const vejrI={sol:{solo:[{i:'🌞',t:'Solskinstur',d:'Gå ud og nyd solen.',vb:'sol'},{i:'🎈',t:'Byg en drage',d:'Byg en drage af bambusstok og papir.',vb:'sol'}],multi:[{i:'☀️',t:'Udendørs sportsstævne',d:'Lav jeres eget stævne!',vb:'sol'},{i:'🧺',t:'Picnic med lege',d:'Pak mad og tag ud.',vb:'sol'}]},regn:{solo:[{i:'🌧️',t:'Skriv en regnvejrshistorie',d:'Sæt dig ved vinduet og skriv.',vb:'regn'},{i:'🎨',t:'Mal et regnvejrsbillede',d:'Brug blå og grå farver.',vb:'regn'}],multi:[{i:'🃏',t:'Brætspilsdag',d:'Perfekt regnvejr til turnering!',vb:'regn'},{i:'🍪',t:'Regndags-bagning',d:'Bag noget varmt og lækkert.',vb:'regn'}]},sne:{solo:[{i:'❄️',t:'Byg en sneperson',d:'Byg en snefigur med sten og grene.',vb:'sne'},{i:'🎨',t:'Farv sneen',d:'Bland madfarve med vand.',vb:'sne'}],multi:[{i:'⛄',t:'Snekrig og skulpturer',d:'Et hold bygger, et holder snekrig!',vb:'sne'},{i:'🛷',t:'Kælkebakke-dag',d:'Hvem kommer længst?',vb:'sne'}]},varmt:{solo:[{i:'🌸',t:'Blomsterpresning',d:'Saml blomster og pres dem.',vb:'varmt'},{i:'🍦',t:'Lav hjemmelavet is',d:'Bland fløde og frugt!',vb:'varmt'}],multi:[{i:'💦',t:'Vandkrig',d:'Hold en stor vandkrig udendørs!',vb:'varmt'},{i:'🍉',t:'Sommer-olympiade',d:'Vandballon-kast og stafet.',vb:'varmt'}]}};
+const dets={'Løbetur med en udfordring':{ting:['Løbesko','Vand'],plads:'Park eller vej',tid:'15–45 min'},'Øvetræning':{ting:['En bold','Kegler'],plads:'Have eller legeplads',tid:'20–60 min'},'Tegn hvad du ser':{ting:['Papir','Blyant eller farver'],plads:'Indendørs',tid:'15–60 min'},'Lav en collage':{ting:['Blade','Saks og lim'],plads:'Indendørs',tid:'20–60 min'},'Skriv en sang':{ting:['Papir og blyant'],plads:'Overalt',tid:'20–60 min'},'Bag noget nyt':{ting:['Ingredienser','Ovn'],plads:'Køkken',tid:'45–90 min'},'Mini-turnering':{ting:['Bold eller spil'],plads:'Have',tid:'30–90 min'},'Lav pizza fra bunden':{ting:['Pizzadej','Fyld','Ovn'],plads:'Køkken',tid:'45–75 min'},'Byg noget kreativt':{ting:['Kartong og tape'],plads:'Gulv eller bord',tid:'30–90 min'},'Byg en fort':{ting:['Puder og tæpper'],plads:'Stue',tid:'30–60 min'}};
+const udfordringsA=[{i:'🍪',t:'Bagekonkurrence'},{i:'🎨',t:'Tegnekonkurrence'},{i:'🏆',t:'Mini-turnering'},{i:'🎤',t:'Karaoke-kamp'},{i:'🧩',t:'LEGO-konkurrence'},{i:'🏗️',t:'Byggekonkurrence'},{i:'📸',t:'Fotojagt'},{i:'🎭',t:'Improvisationsteater'},{i:'🎵',t:'Gæt melodien'},{i:'🛹',t:'Tricks-konkurrence'}];
+function drawAv(c,e,col){const ctx=c.getContext('2d');const s=c.width;ctx.clearRect(0,0,s,s);ctx.fillStyle=col;ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.fill();ctx.font=Math.floor(s*0.5)+'px serif';ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(e,s/2,s/2+s*0.04);}
+function drawPhoto(c,url){const img=new Image();img.onload=function(){const ctx=c.getContext('2d');const s=c.width;ctx.clearRect(0,0,s,s);ctx.save();ctx.beginPath();ctx.arc(s/2,s/2,s/2,0,Math.PI*2);ctx.clip();ctx.drawImage(img,0,0,s,s);ctx.restore();};img.src=url;}
+function renderAvs(){if(!user)return;['nav-av','p-av','la-can'].forEach(id=>{const c=document.getElementById(id);if(!c)return;if(user.foto)drawPhoto(c,user.foto);else drawAv(c,user.emoji,user.color);});}
+function openMod(){document.getElementById('mod-t').textContent=user?'✏️ Rediger profil':'👤 Opret din profil';document.getElementById('mcb').textContent=user?'Gem ændringer ✓':'Opret profil ➜';document.getElementById('mn').value=user?user.name:'';document.getElementById('mun').value=user?user.username:'';document.getElementById('merr').textContent='';fotoUrl=user?user.foto:null;selEm=user?user.emoji:'🦊';selCol=user?user.color:'#9B5DE5';document.getElementById('avp').textContent=selEm;document.getElementById('avp').style.background=selCol;document.querySelectorAll('.eo').forEach(b=>b.classList.toggle('sel',b.textContent===selEm));document.querySelectorAll('.co').forEach(b=>b.classList.toggle('sel',b.style.background===selCol||b.style.backgroundColor===selCol));if(fotoUrl){document.getElementById('uprev').src=fotoUrl;document.getElementById('uprev').style.display='block';document.getElementById('uic').style.display='none';}else{document.getElementById('uprev').style.display='none';document.getElementById('uic').style.display='block';}document.getElementById('pmod').style.display='flex';setTimeout(()=>document.getElementById('mn').focus(),100);}
+function closeMod(){document.getElementById('pmod').style.display='none';}
+function swT(t){activeTab=t;document.querySelectorAll('.mtab').forEach((b,i)=>b.classList.toggle('on',i===(t==='up'?0:1)));document.getElementById('tp-up').classList.toggle('on',t==='up');document.getElementById('tp-av').classList.toggle('on',t==='av');}
+function hFoto(e){const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=ev=>{fotoUrl=ev.target.result;document.getElementById('uprev').src=fotoUrl;document.getElementById('uprev').style.display='block';document.getElementById('uic').style.display='none';};r.readAsDataURL(f);}
+function sEm(b,e){document.querySelectorAll('.eo').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');selEm=e;document.getElementById('avp').textContent=e;}
+function sCol(b,c){document.querySelectorAll('.co').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');selCol=c;document.getElementById('avp').style.background=c;}
+function cap(s){return s?s.charAt(0).toUpperCase()+s.slice(1):s;}
+function createUser(){const rn=document.getElementById('mn').value.trim();const ru=document.getElementById('mun').value.trim().toLowerCase();if(!rn){document.getElementById('merr').textContent='Skriv venligst dit navn!';return;}if(!ru||ru.length<3){document.getElementById('merr').textContent='Brugernavn skal være mindst 3 tegn!';return;}document.getElementById('merr').textContent='';const name=cap(rn);const isEdit=!!user;if(!isEdit){user={name,username:ru,emoji:selEm,color:selCol,foto:activeTab==='up'?fotoUrl:null,favoritter:[],venner:[],anmodninger:[],sendteAnm:[]};streak=0;klaretIDag=false;}else{user.name=name;user.username=ru;user.emoji=selEm;user.color=selCol;if(activeTab==='up')user.foto=fotoUrl;else user.foto=null;}closeMod();renderAvs();updNav();updStart();updProfil();gemAlt();if(!isEdit){toast('Hej '+name+'! 🎉 Din profil er gemt!');show('p1');}else toast('Profil opdateret og gemt! ✅');}
+function updNav(){if(!user){document.getElementById('pnbtn').style.display='none';return;}document.getElementById('pnbtn').style.display='flex';document.getElementById('nav-n').textContent=user.name;updNB();}
+function updNB(){if(!user)return;const c=user.anmodninger.length;const b=document.getElementById('nav-nb');const vb=document.getElementById('vnb');if(c>0){b.style.display='inline-flex';b.textContent=c;if(vb){vb.style.display='inline-flex';vb.textContent=c;}}else{b.style.display='none';if(vb)vb.style.display='none';}}
+function updStart(){if(user){document.getElementById('s-ud').style.display='none';document.getElementById('s-in').style.display='block';document.getElementById('ln').textContent=user.name;}else{document.getElementById('s-ud').style.display='flex';document.getElementById('s-in').style.display='none';}}
+function logUd(){user=null;streak=0;klaretIDag=false;sidstKlaretDato='';age='';hobbies=[];groupN='';gemAlt();updNav();updStart();toast('Du er logget ud 👋');show('p0');}
+function show(id){document.querySelectorAll('.page').forEach(p=>p.classList.remove('on'));document.getElementById(id).classList.add('on');document.querySelectorAll('.nl').forEach(l=>l.classList.remove('on'));const pb=document.getElementById('pb');if(['p1','p2','p3'].includes(id)){pb.style.display='flex';updProg(id);}else pb.style.display='none';if(['p0','p1','p2','p3'].includes(id))document.getElementById('nl0').classList.add('on');if(id==='pD')document.getElementById('nl2').classList.add('on');if(id==='pS')document.getElementById('nl3').classList.add('on');if(id==='pP')updProfil();if(id==='pD')initDagens();if(id==='pS'){visRes(alleA,'');setTimeout(()=>document.getElementById('ssi').focus(),100);}if(id==='p1'&&user){document.getElementById('p1h').textContent='Hej '+user.emoji+' '+user.name+'!';document.getElementById('p1p').textContent='Dine præferencer er husket 😊';restorePrefs();}else if(id==='p1'){document.getElementById('p1h').textContent='🎉 Lad os finde ideer!';document.getElementById('p1p').textContent='Fortæl lidt om dig selv';}if(id==='p0')setTimeout(renderAvs,50);}
+function updProg(id){const steps=['p1','p2','p3'];const cur=steps.indexOf(id);for(let i=0;i<3;i++){const c=document.getElementById('pc'+(i+1));const l=document.getElementById('pl'+(i+1));c.classList.remove('done','act');l.classList.remove('act','done');if(i<cur){c.classList.add('done');l.classList.add('done');c.textContent='✓';}else if(i===cur){c.classList.add('act');l.classList.add('act');c.textContent=i+1;}else c.textContent=i+1;}for(let i=1;i<=2;i++){document.getElementById('pln'+i).classList.toggle('done',i<cur+1);}}
+function sAge(b,v){document.querySelectorAll('.ac').forEach(x=>{x.style.background='';x.style.borderColor='';x.style.color='';});b.style.background='#9B5DE5';b.style.borderColor='#9B5DE5';b.style.color='#fff';age=v;if(user){user.age=v;gemAlt();}document.getElementById('ea').textContent='';}
+function tH(b,v){if(b.classList.contains('sel')){b.classList.remove('sel');hobbies=hobbies.filter(h=>h!==v);}else{b.classList.add('sel');hobbies.push(v);}if(user){user.hobbies=[...hobbies];gemAlt();}document.getElementById('eh').textContent='';}
+function sGrp(b,n){document.querySelectorAll('.gb').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');groupN=n;document.getElementById('eg').textContent='';}
+function sVejr(b,v){if(b.classList.contains('sel')){b.classList.remove('sel');vejr='';}else{document.querySelectorAll('.vbtn').forEach(x=>x.classList.remove('sel'));b.classList.add('sel');vejr=v;}buildIdeas();}
+function go2(){if(!age){document.getElementById('ea').textContent='Vælg din alder!';return;}if(!hobbies.length){document.getElementById('eh').textContent='Vælg mindst én hobby!';return;}if(user){user.age=age;user.hobbies=[...hobbies];gemAlt();}show('p2');}
+function go3(){if(!groupN){document.getElementById('eg').textContent='Vælg antal!';return;}document.getElementById('sa').textContent=age+' år';document.getElementById('sh').textContent=hobbies.join(', ');document.getElementById('sg').textContent=groupN==='1'?'Kun mig':groupN+' pers.';document.getElementById('p3h').textContent=groupN==='1'?'Her er dine ideer!':'Her er jeres ideer!';document.getElementById('detbox').style.display='none';document.getElementById('el').innerHTML='';document.getElementById('mb').style.display='flex';document.getElementById('mb').textContent='✨ Flere ideer';extraShown=false;buildIdeas();buildQCards();show('p3');}
+function startForfra(){age='';hobbies=[];groupN='';vejr='';extraShown=false;document.querySelectorAll('.ac').forEach(b=>{b.style.background='';b.style.borderColor='';b.style.color='';});document.querySelectorAll('.hb2').forEach(b=>b.classList.remove('sel'));document.querySelectorAll('.gb').forEach(b=>b.classList.remove('sel'));document.querySelectorAll('.vbtn').forEach(b=>b.classList.remove('sel'));show('p0');}
+function restorePrefs(){if(!user)return;if(user.age){age=user.age;document.querySelectorAll('.ac').forEach(b=>{b.style.background='';b.style.borderColor='';b.style.color='';if(b.textContent.replace(' år','')===user.age){b.style.background='#9B5DE5';b.style.borderColor='#9B5DE5';b.style.color='#fff';}});}if(user.hobbies&&user.hobbies.length){hobbies=[...user.hobbies];document.querySelectorAll('.hb2').forEach(b=>b.classList.toggle('sel',user.hobbies.includes(b.getAttribute('data-h'))));}}
+function buildIdeas(){const map=groupN==='1'?ideasD.solo:ideasD.multi;const list=document.getElementById('il');list.innerHTML='';if(vejr){const vi=vejrI[vejr];const vl=groupN==='1'?vi.solo:vi.multi;vl.forEach(a=>list.appendChild(mkItem(a,false,vejr)));}const seen=new Set();hobbies.forEach(h=>{(map[h]||[]).forEach(a=>{if(!seen.has(a.t)){seen.add(a.t);list.appendChild(mkItem(a));}});});document.getElementById('ilbl').textContent=(groupN==='1'?'Ideer til dig':'Ideer til jer')+(vejr?' — tilpasset vejret':'');}
+function showMore(){if(extraShown)return;extraShown=true;const btn=document.getElementById('mb');btn.style.opacity='0.6';btn.style.cursor='default';btn.textContent='⏳ Henter...';setTimeout(()=>{const map=groupN==='1'?ideasD.solo:ideasD.multi;const list=document.getElementById('el');list.innerHTML='';const seen=new Set();Object.keys(map).filter(h=>!hobbies.includes(h)).slice(0,5).forEach(h=>{(map[h]||[]).slice(0,1).forEach(a=>{if(!seen.has(a.t)){seen.add(a.t);list.appendChild(mkItem(a,true));}});});btn.style.display='none';list.scrollIntoView({behavior:'smooth',block:'nearest'});},600);}
+function mkItem(a,isNew,vb){const div=document.createElement('div');div.className='ii';const isFav=user&&user.favoritter.some(f=>f.t===a.t);let badges='';if(isNew)badges+='<span class="nb2">Ny!</span>';if(vb){const ic={sol:'☀️',regn:'🌧️',sne:'❄️',varmt:'🌞'};badges+='<span class="vbadge vb'+vb+'">'+ic[vb]+'</span>';}const et=a.t.replace(/'/g,"\\'");div.innerHTML=`<div class="ib"><div class="it"><span class="ii2">${a.i}</span><span class="it2">${a.t}</span>${badges}</div><div class="id2">${a.d}</div></div><button class="hrt" onclick="togFav(this,'${a.i}','${et}')">${isFav?'❤️':'🤍'}</button>`;return div;}
+function togFav(btn,icon,title){if(!user){toast('Opret en bruger for at gemme favoritter! 💜');return;}const idx=user.favoritter.findIndex(f=>f.t===title);if(idx>=0){user.favoritter.splice(idx,1);btn.textContent='🤍';toast('Fjernet fra favoritter');}else{user.favoritter.push({i:icon,t:title});btn.textContent='❤️';btn.classList.add('pop');setTimeout(()=>btn.classList.remove('pop'),300);toast('Gemt som favorit! ❤️');}gemAlt();updNav();}
+function buildQCards(){const colC=['qc1','qc2','qc3','qc4','qc5','qc6'];const map=groupN==='1'?ideasD.solo:ideasD.multi;const c=document.getElementById('qg');c.innerHTML='';const seen=new Set();let ci=0;hobbies.forEach(h=>{(map[h]||[]).forEach(a=>{if(!seen.has(a.t)&&ci<6){seen.add(a.t);const d=document.createElement('div');d.className='qc '+colC[ci%6];ci++;d.innerHTML='<span class="qi">'+a.i+'</span><div class="qtit">'+a.t+'</div><div class="qsub">Tryk for detaljer</div>';d.onclick=()=>showDet(a.t,a.i);c.appendChild(d);}});});}
+function showDet(t,i){const d=dets[t];const box=document.getElementById('detbox');if(!d){box.style.display='none';return;}box.style.display='block';box.innerHTML='<div class="det"><div class="detT">'+i+' '+t+'</div><div class="dlb">Det skal du bruge</div><div class="di">'+d.ting.map(x=>'<span class="dp">'+x+'</span>').join('')+'</div><div class="dlb">Plads</div><div class="di"><span class="sp2">📍 '+d.plads+'</span></div><div class="dlb">Tid</div><div class="di"><span class="dp">⏱ '+d.tid+'</span></div><button class="cb" onclick="document.getElementById(\'detbox\').style.display=\'none\'">Luk ✕</button></div>';box.scrollIntoView({behavior:'smooth',block:'nearest'});}
+function initDagens(){const d=dagU[dIdx];document.getElementById('dban').className='db d'+dIdx;document.getElementById('dtit').textContent=d.i+' '+d.t;document.getElementById('ddesc').textContent=d.d;document.getElementById('dmeta').innerHTML='<span class="dpill2">⏱ '+d.tid+'</span><span class="dpill2">📍 '+d.plads+'</span><span class="dpill2">'+d.type+'</span>';const kb=document.getElementById('klb');kb.textContent=klaretIDag?'Klaret i dag! ✅':'Jeg har gjort det! ✅';kb.classList.toggle('k',klaretIDag);document.getElementById('strtxt').textContent=streak+' dages streak';buildHist();buildKomm();}
+function mKlaret(){klaretIDag=!klaretIDag;if(klaretIDag){streak=Math.max(streak,1);sidstKlaretDato=new Date().toDateString();}const kb=document.getElementById('klb');kb.textContent=klaretIDag?'Klaret i dag! ✅':'Jeg har gjort det! ✅';kb.classList.toggle('k',klaretIDag);document.getElementById('strtxt').textContent=streak+' dages streak';if(user)document.getElementById('pss').textContent=streak;buildHist();gemAlt();if(klaretIDag)toast('Fedt klaret! 🎉 Streak: '+streak+' dag'+(streak===1?'':'e'));}
+function dDel(){if(!user){toast('Log ind for at dele med en ven!');return;}if(!user.venner.length){toast('Du har ingen venner endnu!');return;}udfVen=user.venner[0].username;valgtUdf={i:dagU[dIdx].i,t:dagU[dIdx].t};document.getElementById('uvn').textContent=user.venner[0].name;document.getElementById('ul').innerHTML='<div class="ui sel"><span class="uii">'+dagU[dIdx].i+'</span><span class="uit">'+dagU[dIdx].t+' (Dagens udfordring)</span></div>';document.getElementById('umod').style.display='flex';}
+function buildHist(){document.getElementById('hgrid').innerHTML=ugedage.map((dag,i)=>{const erI=i===dIdx;const erK=erI&&klaretIDag;return`<div class="hd ${erK?'k':''} ${erI?'id':''}"><span class="hem">${dagU[i].i}</span><span class="hlb">${dag}</span></div>`;}).join('');}
+function buildKomm(){const næste=[];for(let i=1;i<=3;i++){const idx=(dIdx+i)%7;næste.push({dag:ugedage[idx],u:dagU[idx]});}document.getElementById('klist').innerHTML=næste.map(n=>`<div style="display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid #f5f5f5;"><span style="font-size:1.3rem;">${n.u.i}</span><div style="flex:1;"><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;">${n.u.t}</div><div style="font-size:10px;color:#999;font-weight:700;">${n.dag} · ${n.u.tid}</div></div></div>`).join('');}
+let ddTimer=null;
+function nSøg(q){clearTimeout(ddTimer);if(q.length<2){hDd();return;}ddTimer=setTimeout(()=>visDd(q),150);}
+function visDd(q){const dd=document.getElementById('ndd');const res=filtrerA(q,'alle').slice(0,5);if(!res.length){dd.innerHTML='<div style="padding:12px;text-align:center;font-size:12px;color:#bbb;font-weight:700;">Ingen resultater for "'+q+'"</div>';}else{dd.innerHTML='<div class="sdd-h">Aktiviteter</div>'+res.map(a=>`<div class="sdd-item" onclick="gSøg('${q}')"><span style="font-size:1.2rem;">${a.i}</span><div><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.82rem;color:#333;">${fremh(a.t,q)}</div><div style="font-size:10px;color:#888;font-weight:700;">${a.d.substring(0,45)}...</div></div></div>`).join('')+(res.length>=5?`<div class="sdd-item" onclick="gSøg('${q}')" style="justify-content:center;color:#9B5DE5;font-family:'Baloo 2',cursive;font-weight:800;font-size:0.8rem;">Se alle →</div>`:'');}dd.style.display='block';setTimeout(()=>{document.addEventListener('click',function h(e){if(!document.getElementById('nsw').contains(e.target)){hDd();document.removeEventListener('click',h);}},true);},100);}
+function hDd(){document.getElementById('ndd').style.display='none';}
+function gSøg(q){hDd();document.getElementById('nsi').value=q;document.getElementById('ssi').value=q;storS(q);show('pS');}
+function storS(q){visRes(filtrerA(q,aktivFilter),q);}
+function togF(b,f){document.querySelectorAll('.fc3').forEach(x=>x.classList.remove('on'));b.classList.add('on');aktivFilter=f;storS(document.getElementById('ssi').value);}
+function filtrerA(q,f){let l=[...alleA];if(f==='solo')l=l.filter(a=>a.tags.includes('solo'));else if(f==='gruppe')l=l.filter(a=>a.tags.includes('gruppe'));else if(['udendørs','indendørs','kreativ','aktiv','rolig'].includes(f))l=l.filter(a=>a.tags.includes(f));if(q&&q.length>0){const lq=q.toLowerCase();l=l.filter(a=>a.t.toLowerCase().includes(lq)||a.d.toLowerCase().includes(lq)||a.h.toLowerCase().includes(lq));l.sort((a,b)=>(a.t.toLowerCase().includes(lq)?0:1)-(b.t.toLowerCase().includes(lq)?0:1));}return l;}
+function fremh(t,q){if(!q)return t;return t.replace(new RegExp('('+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+')','gi'),'<mark class="hl2">$1</mark>');}
+function visRes(res,q){const grid=document.getElementById('rg');const cnt=document.getElementById('sc');if(!q&&aktivFilter==='alle'){cnt.style.display='none';}else{cnt.style.display='block';cnt.textContent=res.length+' aktivitet'+(res.length===1?'':'er')+(q?' for "'+q+'"':'');}if(!res.length){grid.innerHTML='<div style="text-align:center;padding:2.5rem;color:#bbb;grid-column:1/-1;"><div style="font-size:2.5rem;margin-bottom:0.4rem;">🔍</div><div style="font-size:13px;font-weight:700;">Ingen resultater for "'+q+'"</div></div>';return;}grid.innerHTML=res.map(a=>`<div class="ssr"><div style="display:flex;align-items:center;gap:7px;margin-bottom:4px;"><span style="font-size:1.3rem;">${a.i}</span><span class="srtit">${q?fremh(a.t,q):a.t}</span></div><div class="srd">${a.d}</div><div class="srtags">${a.tags.includes('solo')?'<span class="st st-s">🧍 Alene</span>':''}${a.tags.includes('gruppe')?'<span class="st st-g">👥 Gruppe</span>':''}${a.tags.includes('udendørs')?'<span class="st st-h">🌿 Udendørs</span>':'<span class="st st-h">🏠 Indendørs</span>'}<span class="st st-h">${a.h}</span></div></div>`).join('');}
+function updProfil(){if(!user)return;document.getElementById('pnam').textContent=user.name;document.getElementById('pun2').textContent='@'+user.username;document.getElementById('psf').textContent=user.favoritter.length;document.getElementById('psv').textContent=user.venner.length;document.getElementById('pss').textContent=streak;document.getElementById('fc').textContent='('+user.favoritter.length+')';document.getElementById('pal').textContent='🎂 '+(user.age?user.age+' år':'Ikke valgt endnu');const ht=document.getElementById('pht');ht.innerHTML=user.hobbies&&user.hobbies.length?user.hobbies.map(h=>'<span class="ptag">'+h+'</span>').join(''):'<span style="font-size:10px;color:#bbb;font-weight:700;">Ingen endnu</span>';const fl=document.getElementById('fl2');fl.innerHTML=user.favoritter.length?user.favoritter.map((f,i)=>`<div class="fi"><span class="fii">${f.i}</span><span class="fit">${f.t}</span><button class="frm" onclick="rmFav(${i})">✕</button></div>`).join(''):'<div class="fe">Ingen endnu</div>';const anmW=document.getElementById('anmwrap');const anmL=document.getElementById('anml');if(user.anmodninger.length){anmW.style.display='block';anmL.innerHTML=user.anmodninger.map(a=>`<div class="vitem"><canvas data-e="${a.emoji}" data-c="${a.color}" width="36" height="36" class="vav"></canvas><div class="vif"><div class="vn">${a.name}</div><div class="vun">@${a.username}</div></div><button class="vb3 ac" onclick="accV('${a.username}')">Accepter</button><button class="vb3 af" onclick="afvV('${a.username}')">Afvis</button></div>`).join('');}else anmW.style.display='none';const vl=document.getElementById('vl');vl.innerHTML=user.venner.length?user.venner.map(v=>`<div class="vitem"><canvas data-e="${v.emoji}" data-c="${v.color}" width="36" height="36" class="vav"></canvas><div class="vif"><div class="vn">${v.name}</div><div class="vun">@${v.username}</div></div><button class="vb3 ud" onclick="åbnU('${v.username}')">🏆 Udfordr</button><button class="vb3 fj" onclick="fjV('${v.username}')">Fjern</button></div>`).join(''):'<div class="ve">Ingen venner endnu. Prøv: <b>sofia123</b></div>';setTimeout(()=>{document.querySelectorAll('.vav').forEach(c=>drawAv(c,c.dataset.e,c.dataset.c));renderAvs();},50);updNB();}
+function rmFav(i){if(!user)return;user.favoritter.splice(i,1);gemAlt();updProfil();}
+function søgV(){const q=document.getElementById('vsi').value.trim().toLowerCase();const w=document.getElementById('srvrap');if(!q||q.length<2){w.style.display='none';return;}if(!user){toast('Log ind for at søge!');return;}const found=demoUsers.find(u=>u.username===q);w.style.display='block';if(!found){w.innerHTML='<div class="sr2" style="font-size:11px;font-weight:700;color:#888;">Ingen bruger fundet. Prøv: sofia123, lucas_cool, emma_og, noah99</div>';return;}if(found.username===user.username){w.innerHTML='<div class="sr2" style="font-size:11px;font-weight:700;color:#888;">Det er dig selv! 😄</div>';return;}const erV=user.venner.some(v=>v.username===found.username);const afv=user.sendteAnm.includes(found.username);w.innerHTML=`<div class="sr2"><div style="display:flex;align-items:center;gap:9px;"><canvas id="sav" width="36" height="36" style="border-radius:50%;border:2px solid #9B5DE5;flex-shrink:0;"></canvas><div style="flex:1;"><div style="font-family:'Baloo 2',cursive;font-weight:800;font-size:0.85rem;color:#333;">${found.name}</div><div style="font-size:10px;color:#999;font-weight:700;">@${found.username}</div></div>${erV?'<span style="font-size:11px;color:#1D9E75;font-weight:700;">✓ Venner</span>':afv?'<span class="vb3 aw">Afventer...</span>':'<button class="sab" onclick="sendAnm(\''+found.username+'\')">Tilføj ven ➜</button>'}</div></div>`;setTimeout(()=>{const c=document.getElementById('sav');if(c)drawAv(c,found.emoji,found.color);},50);}
+function sendAnm(un){if(!user)return;const f=demoUsers.find(u=>u.username===un);if(!f)return;user.sendteAnm.push(un);if(!user.anmodninger.some(a=>a.username===f.username))user.anmodninger.push(f);gemAlt();toast('Venneanmodning sendt til '+f.name+'! 📬');søgV();updProfil();updNB();}
+function accV(un){const f=[...demoUsers,...user.anmodninger].find(u=>u.username===un);if(!f||!user)return;user.venner.push(f);user.anmodninger=user.anmodninger.filter(a=>a.username!==un);user.sendteAnm=user.sendteAnm.filter(u=>u!==un);gemAlt();toast(f.name+' er nu din ven! 🎉');updProfil();updNB();}
+function afvV(un){if(!user)return;user.anmodninger=user.anmodninger.filter(a=>a.username!==un);user.sendteAnm=user.sendteAnm.filter(u=>u!==un);gemAlt();updProfil();updNB();}
+function fjV(un){if(!user)return;user.venner=user.venner.filter(v=>v.username!==un);gemAlt();toast('Ven fjernet');updProfil();}
+function åbnU(un){const v=[...demoUsers,...(user?user.venner:[])].find(u=>u.username===un);if(!v)return;udfVen=un;valgtUdf=null;document.getElementById('uvn').textContent=v.name;document.getElementById('ul').innerHTML=udfordringsA.map((a,i)=>`<div class="ui" id="ui${i}" onclick="vU(${i},this,'${a.i}','${a.t.replace(/'/g,"\\'")}')"><span class="uii">${a.i}</span><span class="uit">${a.t}</span></div>`).join('');document.getElementById('umod').style.display='flex';}
+function vU(i,el,ic,t){document.querySelectorAll('.ui').forEach(e=>e.classList.remove('sel'));el.classList.add('sel');valgtUdf={i:ic,t:t};}
+function sendU(){if(!valgtUdf){toast('Vælg en aktivitet først!');return;}const v=[...demoUsers,...(user?user.venner:[])].find(u=>u.username===udfVen);document.getElementById('umod').style.display='none';toast('Udfordring sendt til '+(v?v.name:'vennen')+': '+valgtUdf.t+' 🏆');}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.style.display='block';t.style.opacity='1';setTimeout(()=>{t.style.opacity='0';setTimeout(()=>{t.style.display='none';},500);},2500);}
+indlæsAlt();
+if(user){updNav();updStart();setTimeout(()=>{renderAvs();},100);}
+setTimeout(()=>visRes(alleA,''),100);
+</script>
+</body>
+</html>
