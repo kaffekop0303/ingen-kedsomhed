@@ -7,7 +7,7 @@ import { SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 const navLinks = [
   { href: '/', label: 'Hjem', emoji: '🏠' },
   { href: '/guide', label: 'Guide', emoji: '🗺️' },
-  { href: '/daglig-udfordring', label: 'Dagens', emoji: '⭐' },
+  { href: '/daglig-udfordring', label: 'Dagens udfordring', emoji: '⭐' },
   { href: '/soeg', label: 'Søg', emoji: '🔍' },
 ]
 
