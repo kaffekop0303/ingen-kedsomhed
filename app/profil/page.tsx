@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Navigation from '@/components/Navigation'
 import type { Favorite } from '@/lib/types'
@@ -71,6 +71,22 @@ export default function ProfilPage() {
   const [editHobbies, setEditHobbies] = useState<string[]>([])
   const [editAgeGroup, setEditAgeGroup] = useState('')
   const [saving, setSaving] = useState(false)
+  const [uploadingPhoto, setUploadingPhoto] = useState(false)
+  const photoInputRef = useRef<HTMLInputElement>(null)
+
+  const handlePhotoUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (!file || !user) return
+    setUploadingPhoto(true)
+    try {
+      await user.setProfileImage({ file })
+    } catch (err) {
+      console.error('Foto-upload fejlede:', err)
+    } finally {
+      setUploadingPhoto(false)
+      if (photoInputRef.current) photoInputRef.current.value = ''
+    }
+  }
 
   const loadFriends = async () => {
     const res = await fetch('/api/friends')
@@ -286,14 +302,45 @@ export default function ProfilPage() {
               Rediger profil
             </h2>
 
-            {/* Avatar preview */}
-            <div className="flex justify-center mb-4">
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-4xl"
-                style={{ backgroundColor: editAvatarColor }}
-              >
-                {editAvatarEmoji}
+            {/* Avatar preview + foto upload */}
+            <div className="flex flex-col items-center mb-4 gap-2">
+              <div className="relative">
+                {user?.imageUrl ? (
+                  <img
+                    src={user.imageUrl}
+                    alt="Profilbillede"
+                    className="w-20 h-20 rounded-full object-cover"
+                    style={{ border: '3px solid #9B5DE5' }}
+                  />
+                ) : (
+                  <div
+                    className="w-20 h-20 rounded-full flex items-center justify-center text-4xl"
+                    style={{ backgroundColor: editAvatarColor }}
+                  >
+                    {editAvatarEmoji}
+                  </div>
+                )}
+                <button
+                  type="button"
+                  onClick={() => photoInputRef.current?.click()}
+                  disabled={uploadingPhoto}
+                  className="absolute bottom-0 right-0 w-7 h-7 rounded-full flex items-center justify-center text-xs transition-all hover:scale-110"
+                  style={{ backgroundColor: '#9B5DE5', border: '2px solid #fff', color: '#fff' }}
+                  title="Upload foto"
+                >
+                  {uploadingPhoto ? '⏳' : '📷'}
+                </button>
+                <input
+                  ref={photoInputRef}
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={handlePhotoUpload}
+                />
               </div>
+              <p className="text-xs text-gray-400 font-semibold" style={{ fontFamily: '"Nunito", sans-serif' }}>
+                {user?.imageUrl ? 'Klik 📷 for at skifte foto' : 'Klik 📷 for at uploade et foto'}
+              </p>
             </div>
 
             {/* Emoji picker */}
@@ -447,11 +494,22 @@ export default function ProfilPage() {
           >
             {/* Avatar + name */}
             <div className="flex flex-col items-center mb-5">
-              <div
-                className="w-20 h-20 rounded-full flex items-center justify-center text-4xl mb-3"
-                style={{ backgroundColor: displayProfile.avatar_color || '#9B5DE5' }}
-              >
-                {displayProfile.avatar_emoji || '😊'}
+              <div className="relative mb-3">
+                {user?.imageUrl ? (
+                  <img
+                    src={user.imageUrl}
+                    alt="Profilbillede"
+                    className="w-20 h-20 rounded-full object-cover"
+                    style={{ border: '3px solid #9B5DE5' }}
+                  />
+                ) : (
+                  <div
+                    className="w-20 h-20 rounded-full flex items-center justify-center text-4xl"
+                    style={{ backgroundColor: displayProfile.avatar_color || '#9B5DE5' }}
+                  >
+                    {displayProfile.avatar_emoji || '😊'}
+                  </div>
+                )}
               </div>
               <h2
                 className="text-xl font-extrabold"
