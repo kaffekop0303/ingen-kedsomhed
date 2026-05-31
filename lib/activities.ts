@@ -313,6 +313,132 @@ export const activities: Activity[] = [
     time: '15–30 min', difficulty: 'let', needs: ['Ingen ting nødvendigt'],
     tips: 'Lav løgnen troværdig og de sande ting overraskende — det er tricket!'
   },
+
+  // Ekstra aktiviteter — sport
+  {
+    icon: '🏸', title: 'Badminton i haven', description: 'Sæt et net op og spil badminton.',
+    tags: ['aktiv', 'udendørs', 'gruppe'], hobby: 'sport',
+    time: '30–60 min', difficulty: 'let', needs: ['Badmintonketchere', 'Fjerbolde'],
+    tips: 'Brug et reb som net hvis du ikke har et rigtigt — det virker fint!'
+  },
+  {
+    icon: '🤸', title: 'Gymnastikundersøgelse', description: 'Lær en ny gymnástiktbevægelse.',
+    tags: ['aktiv', 'indendørs', 'solo'], hobby: 'sport',
+    time: '20–45 min', difficulty: 'mellem', needs: ['Måtte eller blødt underlag', 'Plads til at bevæge sig'],
+    tips: 'Start med kolbøtter og hjulspring — YouTube har gode tutorials!'
+  },
+  {
+    icon: '🎯', title: 'Sækkekast', description: 'Lav mål og kast sækkekasser eller bolde derhen.',
+    tags: ['aktiv', 'udendørs', 'gruppe'], hobby: 'sport',
+    time: '20–45 min', difficulty: 'let', needs: ['Sækkekasser eller små bolde', 'Kurve eller kasser som mål'],
+    tips: 'Skift afstanden for hvert runde — sværere og sværere!'
+  },
+
+  // Ekstra aktiviteter — kreativ
+  {
+    icon: '🪡', title: 'Lav armbånd', description: 'Flét armbånd af tråd til dine venner.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'kunst',
+    time: '30–60 min', difficulty: 'let', needs: ['Farvet tråd eller garn', 'Saks'],
+    tips: 'Søg "venskabsarmbånd trin for trin" på YouTube — der er mange mønstre!'
+  },
+  {
+    icon: '🪨', title: 'Mal sten', description: 'Find sten udenfor og mal dem med mønstre.',
+    tags: ['kreativ', 'udendørs', 'solo'], hobby: 'kunst',
+    time: '30–60 min', difficulty: 'let', needs: ['Flade sten', 'Maling eller tusser', 'Lak til at beskytte'],
+    tips: 'Placer dine malede sten skjulte steder ude — det er en fin overraskelse for andre!'
+  },
+  {
+    icon: '🧶', title: 'Lær at strikke eller hækle', description: 'Lav dit første strik-projekt.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'kunst',
+    time: '45–90 min', difficulty: 'mellem', needs: ['Strikkepinde eller hæklenål', 'Garn'],
+    tips: 'Start med et simpelt halstørklæde — det er kun to masker der gentages!'
+  },
+  {
+    icon: '🎭', title: 'Lav en dukketeater-forestilling', description: 'Byg dukker og lav et show.',
+    tags: ['kreativ', 'indendørs', 'gruppe'], hobby: 'teater',
+    time: '60–120 min', difficulty: 'let', needs: ['Sokker eller papirposer', 'Farver og saks', 'Et tæppe som scene'],
+    tips: 'Skriv manuskriptet ned på forhånd — men improviser gerne undervejs!'
+  },
+
+  // Ekstra aktiviteter — natur
+  {
+    icon: '🌱', title: 'Lav en mini-have', description: 'Plant urter i en kasse eller potte.',
+    tags: ['kreativ', 'udendørs', 'solo'], hobby: 'natur',
+    time: '30–60 min', difficulty: 'let', needs: ['Potter eller kasse', 'Jord', 'Frø eller småplanter'],
+    tips: 'Basilikum og mynte er nemmest — de gror hurtigt og kan bruges til mad!'
+  },
+  {
+    icon: '🔭', title: 'Stjernekort-aften', description: 'Brug en app til at identificere stjerner.',
+    tags: ['rolig', 'udendørs', 'gruppe'], hobby: 'natur',
+    time: '30–60 min', difficulty: 'let', needs: ['Telefon med stjerne-app (f.eks. Sky Map)', 'Tæppe at ligge på'],
+    tips: 'Vent til det er helt mørkt og gå væk fra lys — så kan du se flest stjerner!'
+  },
+  {
+    icon: '🍄', title: 'Naturopsamling-tur', description: 'Saml blade, frø og kogler og lav et kunstværk.',
+    tags: ['aktiv', 'udendørs', 'solo'], hobby: 'natur',
+    time: '45–90 min', difficulty: 'let', needs: ['Pose til at samle', 'Lim og papir til kunstværk'],
+    tips: 'Tag et foto af alt du finder — du kan lave en naturguide bagefter!'
+  },
+
+  // Ekstra aktiviteter — mad
+  {
+    icon: '🥗', title: 'Lav din egne wrap', description: 'Opfind en skøn wrap med det der er i køleskabet.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'madlavning',
+    time: '15–30 min', difficulty: 'let', needs: ['Wraps', 'Fyld fra køleskabet'],
+    tips: 'Bland sødt og salt — f.eks. kylling og mango er fantastisk!'
+  },
+  {
+    icon: '🍫', title: 'Dyp frugt i chokolade', description: 'Lav chokoladedyppede jordbær eller banan.',
+    tags: ['kreativ', 'indendørs', 'gruppe'], hobby: 'madlavning',
+    time: '20–40 min', difficulty: 'let', needs: ['Chokolade', 'Frugt', 'Pinde', 'Bagepapir'],
+    tips: 'Tilsæt lidt kokosolie til chokoladen — det giver et flottere blankt lag!'
+  },
+  {
+    icon: '🥤', title: 'Opfind en smoothie', description: 'Bland frugter og lav din signatursmoothie.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'madlavning',
+    time: '10–20 min', difficulty: 'let', needs: ['Frugt', 'Blender', 'Mælk eller juice'],
+    tips: 'Frossen frugt giver en tykkere og koldere smoothie — prøv det!'
+  },
+
+  // Ekstra aktiviteter — musik/dans
+  {
+    icon: '🎹', title: 'Lær en simpel melodi', description: 'Lær en melodi på klaver, guitar eller xylofon.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'musik',
+    time: '30–60 min', difficulty: 'let', needs: ['Et instrument'],
+    tips: 'Start med "Twinkle Twinkle" — 5 toner og du lyder allerede godt!'
+  },
+  {
+    icon: '🕺', title: 'TikTok-dans udfordring', description: 'Lær en populær dans og film det.',
+    tags: ['aktiv', 'indendørs', 'gruppe'], hobby: 'dans',
+    time: '20–45 min', difficulty: 'let', needs: ['Telefon til musik og optagelse', 'Plads til at danse'],
+    tips: 'Øv de sværeste dele separat inden du prøver hele dansen!'
+  },
+
+  // Ekstra aktiviteter — misc
+  {
+    icon: '🧩', title: 'Lav dit eget puslespil', description: 'Tegn et billede, klip det ud og saml det.',
+    tags: ['kreativ', 'indendørs', 'solo'], hobby: 'lego',
+    time: '30–60 min', difficulty: 'let', needs: ['Karton', 'Farver', 'Saks'],
+    tips: 'Jo flere brikker du laver, jo sværere bliver det — start med 20!'
+  },
+  {
+    icon: '🎪', title: 'Lav en cirkusforestilling', description: 'Opfind numre og hold en forestilling for familien.',
+    tags: ['kreativ', 'indendørs', 'gruppe'], hobby: 'teater',
+    time: '60–120 min', difficulty: 'let', needs: ['Kostumer (hvad som helst)', 'Musik til baggrund'],
+    tips: 'Øv hvert nummer 3 gange inden generalprøven — det giver mere selvtillid!'
+  },
+  {
+    icon: '📝', title: 'Lav din egen quiz', description: 'Skriv 10 spørgsmål og test familien.',
+    tags: ['rolig', 'indendørs', 'gruppe'], hobby: 'brætspil',
+    time: '30–60 min', difficulty: 'let', needs: ['Papir og blyant', 'Point-tavle'],
+    tips: 'Mix nemme og svære spørgsmål — og lav mindst ét om lokale kendsgerninger!'
+  },
+  {
+    icon: '🛶', title: 'Byg og sejl en papirsbåd', description: 'Fold en båd og test den i en balje eller et vandløb.',
+    tags: ['kreativ', 'udendørs', 'gruppe'], hobby: 'håndværk',
+    time: '20–45 min', difficulty: 'let', needs: ['Papir', 'Vand (balje, bæk eller sø)'],
+    tips: 'Lav flere designs og test hvilken der bærer mest — det er rigtig videnskab!'
+  },
 ]
 
 export const hobbies = [
