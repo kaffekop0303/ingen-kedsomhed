@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
 import Navigation from '@/components/Navigation'
-import type { Profile, Favorite, Friendship } from '@/lib/types'
+import type { Favorite } from '@/lib/types'
 
 const avatarColors = ['#9B5DE5', '#FF6B6B', '#FFB703', '#1D9E75', '#3A86FF', '#F72585', '#FF9A3C']
 const avatarEmojis = ['😊', '🦄', '🐻', '🦊', '🐸', '🦋', '🎃', '🌈', '🚀', '⭐', '🎯', '🏆']
@@ -22,21 +22,43 @@ const hobbyOptions = [
   { id: 'yoga', label: 'Yoga', icon: '🧘' },
 ]
 
-type FriendWithProfile = {
-  friendship: Friendship
-  profile?: Profile
+type FriendProfile = {
+  clerk_id: string
+  username: string
+  display_name: string
+  avatar_emoji: string
+  avatar_color: string
+  friendship_id?: string
+  requester_id?: string
+}
+
+type FriendsData = {
+  friends: FriendProfile[]
+  received: FriendProfile[]
+  sent: string[]
+}
+
+type Profile = {
+  id?: string
+  clerk_id?: string
+  username: string
+  display_name: string
+  avatar_emoji: string
+  avatar_color: string
+  hobbies: string[]
+  age_group?: string
 }
 
 export default function ProfilPage() {
   const { user } = useUser()
   const [profile, setProfile] = useState<Profile | null>(null)
   const [favorites, setFavorites] = useState<Favorite[]>([])
-  const [friends, setFriends] = useState<FriendWithProfile[]>([])
+  const [friendsData, setFriendsData] = useState<FriendsData>({ friends: [], received: [], sent: [] })
   const [streak, setStreak] = useState(0)
   const [loading, setLoading] = useState(true)
   const [editing, setEditing] = useState(false)
   const [friendSearch, setFriendSearch] = useState('')
-  const [friendSearchResult, setFriendSearchResult] = useState<Profile | null>(null)
+  const [friendSearchResult, setFriendSearchResult] = useState<FriendProfile | null>(null)
   const [friendSearchError, setFriendSearchError] = useState('')
   const [searching, setSearching] = useState(false)
   const [sendingRequest, setSendingRequest] = useState(false)
@@ -50,6 +72,18 @@ export default function ProfilPage() {
   const [editAgeGroup, setEditAgeGroup] = useState('')
   const [saving, setSaving] = useState(false)
 
+  const loadFriends = async () => {
+    const res = await fetch('/api/friends')
+    const data = await res.json()
+    if (data && !data.error && (data.friends || data.received || data.sent)) {
+      setFriendsData({
+        friends: data.friends || [],
+        received: data.received || [],
+        sent: data.sent || [],
+      })
+    }
+  }
+
   useEffect(() => {
     async function loadData() {
       try {
@@ -61,7 +95,7 @@ export default function ProfilPage() {
         ])
         const profileData = await profileRes.json()
         const favsData = await favsRes.json()
-        const friendsData = await friendsRes.json()
+        const friendsApiData = await friendsRes.json()
         const streakData = await streakRes.json()
 
         if (profileData && !profileData.error) {
@@ -80,7 +114,15 @@ export default function ProfilPage() {
         }
 
         if (Array.isArray(favsData)) setFavorites(favsData)
-        if (Array.isArray(friendsData)) setFriends(friendsData)
+
+        if (friendsApiData && !friendsApiData.error) {
+          setFriendsData({
+            friends: friendsApiData.friends || [],
+            received: friendsApiData.received || [],
+            sent: friendsApiData.sent || [],
+          })
+        }
+
         if (streakData?.current_streak !== undefined) setStreak(streakData.current_streak)
       } catch (e) {
         console.error(e)
@@ -125,7 +167,7 @@ export default function ProfilPage() {
       const res = await fetch(`/api/friends?search=${encodeURIComponent(friendSearch.trim())}`)
       const data = await res.json()
       if (data.profile) {
-        setFriendSearchResult(data.profile)
+        setFriendSearchResult(data.profile as FriendProfile)
       } else {
         setFriendSearchError('Ingen bruger fundet med det brugernavn.')
       }
@@ -139,31 +181,40 @@ export default function ProfilPage() {
   const handleSendFriendRequest = async (addresseeId: string) => {
     setSendingRequest(true)
     try {
-      await fetch('/api/friends', {
+      const res = await fetch('/api/friends', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'send', addressee_clerk_id: addresseeId }),
       })
+      const data = await res.json()
+      if (data.error) {
+        setFriendSearchError(data.error === 'Friendship already exists' ? 'Du har allerede sendt en anmodning til denne bruger.' : data.error)
+        return
+      }
       setFriendSearchResult(null)
       setFriendSearch('')
-      // Reload friends
-      const res = await fetch('/api/friends')
-      const data = await res.json()
-      if (Array.isArray(data)) setFriends(data)
+      await loadFriends()
     } finally {
       setSendingRequest(false)
     }
   }
 
-  const handleFriendAction = async (friendshipId: string, action: 'accept' | 'reject') => {
+  const handleFriendAction = async (clerkId: string, action: 'accept' | 'reject') => {
     await fetch('/api/friends', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ action, friendship_id: friendshipId }),
+      body: JSON.stringify({ action, requester_id: clerkId }),
     })
-    const res = await fetch('/api/friends')
-    const data = await res.json()
-    if (Array.isArray(data)) setFriends(data)
+    await loadFriends()
+  }
+
+  const handleRemoveFriend = async (friendId: string) => {
+    await fetch('/api/friends', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ action: 'remove', friend_id: friendId }),
+    })
+    await loadFriends()
   }
 
   const handleRemoveFavorite = async (title: string) => {
@@ -203,6 +254,8 @@ export default function ProfilPage() {
     hobbies: editHobbies,
     age_group: editAgeGroup,
   }
+
+  const totalFriendCount = friendsData.friends.length
 
   return (
     <>
@@ -425,7 +478,7 @@ export default function ProfilPage() {
             <div className="grid grid-cols-3 gap-3 mb-5">
               {[
                 { label: 'Favoritter', value: favorites.length, emoji: '❤️', color: '#FF6B6B' },
-                { label: 'Venner', value: friends.filter((f) => f.friendship.status === 'accepted').length, emoji: '👫', color: '#3A86FF' },
+                { label: 'Venner', value: totalFriendCount, emoji: '👫', color: '#3A86FF' },
                 { label: 'Streak', value: streak, emoji: '🔥', color: '#FFB703' },
               ].map((stat) => (
                 <div
@@ -582,98 +635,126 @@ export default function ProfilPage() {
                     @{friendSearchResult.username}
                   </div>
                 </div>
-                <button
-                  onClick={() => handleSendFriendRequest(friendSearchResult.clerk_id)}
-                  disabled={sendingRequest}
-                  className="text-xs font-bold px-3 py-1.5 rounded-full text-white transition-all hover:opacity-90 disabled:opacity-50"
-                  style={{ fontFamily: '"Baloo 2", cursive', background: '#3A86FF' }}
-                >
-                  {sendingRequest ? '⏳' : '➕ Tilføj ven'}
-                </button>
+                {friendsData.sent.includes(friendSearchResult.clerk_id) ? (
+                  <span
+                    className="text-xs font-bold px-3 py-1.5 rounded-full"
+                    style={{ fontFamily: '"Nunito", sans-serif', background: '#f0f0f0', color: '#888' }}
+                  >
+                    Sendt ✓
+                  </span>
+                ) : friendsData.friends.some((f) => f.clerk_id === friendSearchResult.clerk_id) ? (
+                  <span
+                    className="text-xs font-bold px-3 py-1.5 rounded-full"
+                    style={{ fontFamily: '"Nunito", sans-serif', background: '#e8f5e8', color: '#1D9E75' }}
+                  >
+                    Allerede ven ✓
+                  </span>
+                ) : (
+                  <button
+                    onClick={() => handleSendFriendRequest(friendSearchResult.clerk_id)}
+                    disabled={sendingRequest}
+                    className="text-xs font-bold px-3 py-1.5 rounded-full text-white transition-all hover:opacity-90 disabled:opacity-50"
+                    style={{ fontFamily: '"Baloo 2", cursive', background: '#3A86FF' }}
+                  >
+                    {sendingRequest ? '⏳' : '➕ Tilføj ven'}
+                  </button>
+                )}
               </div>
             )}
           </div>
 
-          {/* Pending requests */}
-          {friends.filter((f) => f.friendship.status === 'pending').length > 0 && (
+          {/* Received (pending) requests */}
+          {friendsData.received.length > 0 && (
             <div className="mb-4">
               <p className="text-xs font-bold text-orange-500 mb-2" style={{ fontFamily: '"Nunito", sans-serif' }}>
-                Ventende venneanmodninger
+                Ventende venneanmodninger ({friendsData.received.length})
               </p>
-              {friends
-                .filter((f) => f.friendship.status === 'pending')
-                .map((f) => (
+              {friendsData.received.map((f) => (
+                <div
+                  key={f.clerk_id}
+                  className="flex items-center gap-3 p-2.5 rounded-xl mb-2"
+                  style={{ background: '#fff8e0', border: '2px solid #ffe082' }}
+                >
                   <div
-                    key={f.friendship.id}
-                    className="flex items-center gap-3 p-2.5 rounded-xl mb-2"
-                    style={{ background: '#fff8e0', border: '2px solid #ffe082' }}
+                    className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
+                    style={{ backgroundColor: f.avatar_color || '#9B5DE5' }}
                   >
-                    <div
-                      className="w-9 h-9 rounded-full flex items-center justify-center text-lg flex-shrink-0"
-                      style={{ backgroundColor: f.profile?.avatar_color || '#9B5DE5' }}
-                    >
-                      {f.profile?.avatar_emoji || '😊'}
+                    {f.avatar_emoji || '😊'}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="font-bold text-sm" style={{ fontFamily: '"Baloo 2", cursive' }}>
+                      {f.display_name || 'Ukendt bruger'}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="font-bold text-sm" style={{ fontFamily: '"Baloo 2", cursive' }}>
-                        {f.profile?.display_name || 'Ukendt bruger'}
-                      </div>
-                      <div className="text-xs text-gray-500" style={{ fontFamily: '"Nunito", sans-serif' }}>
-                        @{f.profile?.username || ''}
-                      </div>
-                    </div>
-                    <div className="flex gap-1 flex-shrink-0">
-                      <button
-                        onClick={() => handleFriendAction(f.friendship.id, 'accept')}
-                        className="text-xs font-bold px-2 py-1 rounded-full text-white"
-                        style={{ background: '#1D9E75' }}
-                      >
-                        ✓
-                      </button>
-                      <button
-                        onClick={() => handleFriendAction(f.friendship.id, 'reject')}
-                        className="text-xs font-bold px-2 py-1 rounded-full text-white"
-                        style={{ background: '#FF6B6B' }}
-                      >
-                        ✕
-                      </button>
+                    <div className="text-xs text-gray-500" style={{ fontFamily: '"Nunito", sans-serif' }}>
+                      @{f.username || ''}
                     </div>
                   </div>
-                ))}
+                  <div className="flex gap-1 flex-shrink-0">
+                    <button
+                      onClick={() => handleFriendAction(f.clerk_id, 'accept')}
+                      className="text-xs font-bold px-2 py-1 rounded-full text-white"
+                      style={{ background: '#1D9E75' }}
+                    >
+                      ✓
+                    </button>
+                    <button
+                      onClick={() => handleFriendAction(f.clerk_id, 'reject')}
+                      className="text-xs font-bold px-2 py-1 rounded-full text-white"
+                      style={{ background: '#FF6B6B' }}
+                    >
+                      ✕
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Sent (pending) requests */}
+          {friendsData.sent.length > 0 && (
+            <div className="mb-4">
+              <p className="text-xs font-bold text-gray-400 mb-2" style={{ fontFamily: '"Nunito", sans-serif' }}>
+                Sendte anmodninger ({friendsData.sent.length})
+              </p>
             </div>
           )}
 
           {/* Accepted friends */}
-          {friends.filter((f) => f.friendship.status === 'accepted').length === 0 ? (
+          {friendsData.friends.length === 0 ? (
             <p className="text-sm text-gray-400 font-semibold text-center py-4" style={{ fontFamily: '"Nunito", sans-serif' }}>
               Du har ingen venner endnu.<br />Søg efter et brugernavn for at tilføje!
             </p>
           ) : (
             <div className="flex flex-col gap-2">
-              {friends
-                .filter((f) => f.friendship.status === 'accepted')
-                .map((f) => (
+              {friendsData.friends.map((f) => (
+                <div
+                  key={f.clerk_id}
+                  className="flex items-center gap-3 p-2.5 rounded-xl"
+                  style={{ background: '#f0f7ff' }}
+                >
                   <div
-                    key={f.friendship.id}
-                    className="flex items-center gap-3 p-2.5 rounded-xl"
-                    style={{ background: '#f0f7ff' }}
+                    className="w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0"
+                    style={{ backgroundColor: f.avatar_color || '#9B5DE5' }}
                   >
-                    <div
-                      className="w-10 h-10 rounded-full flex items-center justify-center text-xl flex-shrink-0"
-                      style={{ backgroundColor: f.profile?.avatar_color || '#9B5DE5' }}
-                    >
-                      {f.profile?.avatar_emoji || '😊'}
+                    {f.avatar_emoji || '😊'}
+                  </div>
+                  <div className="flex-1">
+                    <div className="font-bold text-sm" style={{ fontFamily: '"Baloo 2", cursive' }}>
+                      {f.display_name || 'Ukendt bruger'}
                     </div>
-                    <div className="flex-1">
-                      <div className="font-bold text-sm" style={{ fontFamily: '"Baloo 2", cursive' }}>
-                        {f.profile?.display_name || 'Ukendt bruger'}
-                      </div>
-                      <div className="text-xs text-gray-500" style={{ fontFamily: '"Nunito", sans-serif' }}>
-                        @{f.profile?.username || ''}
-                      </div>
+                    <div className="text-xs text-gray-500" style={{ fontFamily: '"Nunito", sans-serif' }}>
+                      @{f.username || ''}
                     </div>
                   </div>
-                ))}
+                  <button
+                    onClick={() => handleRemoveFriend(f.clerk_id)}
+                    className="text-xs text-gray-300 hover:text-red-400 transition-colors"
+                    title="Fjern ven"
+                  >
+                    ✕
+                  </button>
+                </div>
+              ))}
             </div>
           )}
         </div>

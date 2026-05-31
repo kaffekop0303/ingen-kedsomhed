@@ -29,6 +29,166 @@ const tagColors: Record<string, { bg: string; text: string }> = {
   gruppe: { bg: '#e0f7fa', text: '#1D9E75' },
 }
 
+const difficultyConfig = {
+  let: { bg: '#e8f5e8', text: '#1D9E75', label: 'Let' },
+  mellem: { bg: '#fff3e0', text: '#FF9A3C', label: 'Mellem' },
+  svær: { bg: '#fce8e8', text: '#FF6B6B', label: 'Svær' },
+}
+
+function ActivityCard({
+  activity,
+  isFav,
+  isLoading,
+  isSignedIn,
+  onFavorite,
+  onTagClick,
+}: {
+  activity: Activity
+  isFav: boolean
+  isLoading: boolean
+  isSignedIn: boolean | null | undefined
+  onFavorite: (a: Activity) => void
+  onTagClick: (tag: string) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const diff = difficultyConfig[activity.difficulty]
+
+  return (
+    <div
+      className="bg-white rounded-2xl transition-all hover:shadow-md hover:-translate-y-0.5"
+      style={{
+        border: expanded ? '2px solid #9B5DE5' : '2px solid #f0f0f0',
+        boxShadow: expanded ? '0 4px 12px rgba(155,93,229,0.15)' : '0 2px 0 rgba(0,0,0,0.04)',
+      }}
+    >
+      {/* Main row */}
+      <div
+        className="p-4 flex gap-3 cursor-pointer"
+        onClick={() => setExpanded((e) => !e)}
+      >
+        <div className="text-3xl flex-shrink-0">{activity.icon}</div>
+        <div className="flex-1 min-w-0">
+          <div
+            className="font-extrabold text-sm text-gray-800 mb-0.5"
+            style={{ fontFamily: '"Baloo 2", cursive' }}
+          >
+            {activity.title}
+          </div>
+          <div
+            className="text-xs text-gray-500 font-semibold mb-2"
+            style={{ fontFamily: '"Nunito", sans-serif' }}
+          >
+            {activity.description}
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {activity.tags.map((tag) => {
+              const colors = tagColors[tag] || { bg: '#f5f5f5', text: '#888' }
+              return (
+                <span
+                  key={tag}
+                  className="text-xs font-bold px-2 py-0.5 rounded-full cursor-pointer hover:opacity-80"
+                  style={{ backgroundColor: colors.bg, color: colors.text }}
+                  onClick={(e) => { e.stopPropagation(); onTagClick(tag) }}
+                >
+                  {tag}
+                </span>
+              )
+            })}
+            <span
+              className="text-xs font-bold px-2 py-0.5 rounded-full"
+              style={{ backgroundColor: '#f5f5f5', color: '#9B5DE5' }}
+            >
+              {activity.hobby}
+            </span>
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          {isSignedIn && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onFavorite(activity) }}
+              disabled={isLoading}
+              className="text-xl transition-all hover:scale-125 active:scale-90 disabled:opacity-50"
+              title={isFav ? 'Fjern fra favoritter' : 'Tilføj til favoritter'}
+            >
+              {isLoading ? '⏳' : isFav ? '❤️' : '🤍'}
+            </button>
+          )}
+          <span
+            className="text-base leading-none transition-transform duration-200"
+            style={{
+              display: 'inline-block',
+              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              color: '#9B5DE5',
+            }}
+          >
+            ▼
+          </span>
+        </div>
+      </div>
+
+      {/* Expanded detail */}
+      {expanded && (
+        <div
+          className="px-4 pb-4"
+          style={{ borderTop: '1px solid #f0f0f0' }}
+        >
+          <div className="pt-3 flex flex-wrap gap-2 mb-3">
+            {/* Time badge */}
+            <span
+              className="text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1"
+              style={{ backgroundColor: '#e8f2ff', color: '#3A86FF' }}
+            >
+              ⏱ {activity.time}
+            </span>
+            {/* Difficulty badge */}
+            <span
+              className="text-xs font-bold px-2.5 py-1 rounded-full"
+              style={{ backgroundColor: diff.bg, color: diff.text }}
+            >
+              {diff.label}
+            </span>
+          </div>
+
+          {/* Needs */}
+          <div className="mb-3">
+            <div
+              className="text-xs font-bold text-gray-500 mb-1 flex items-center gap-1"
+              style={{ fontFamily: '"Nunito", sans-serif' }}
+            >
+              📦 Du skal bruge
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {activity.needs.map((need) => (
+                <span
+                  key={need}
+                  className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                  style={{ backgroundColor: '#f5f5f5', color: '#555' }}
+                >
+                  {need}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          {/* Tips */}
+          <div
+            className="rounded-xl p-2.5 flex gap-2 items-start"
+            style={{ backgroundColor: '#fffbef', border: '1px solid #ffedb3' }}
+          >
+            <span className="text-base flex-shrink-0">💡</span>
+            <p
+              className="text-xs font-semibold text-gray-600"
+              style={{ fontFamily: '"Nunito", sans-serif' }}
+            >
+              {activity.tips}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function SoegPage() {
   const { isSignedIn } = useAuth()
   const [query, setQuery] = useState('')
@@ -110,7 +270,7 @@ export default function SoegPage() {
             🔍 Søg Aktiviteter
           </h1>
           <p className="text-sm font-semibold text-gray-500" style={{ fontFamily: '"Nunito", sans-serif' }}>
-            {activities.length} aktiviteter klar til dig
+            {activities.length} aktiviteter klar til dig · Klik på en aktivitet for detaljer
           </p>
         </div>
 
@@ -193,67 +353,17 @@ export default function SoegPage() {
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-            {filtered.map((activity) => {
-              const isFav = favorites.includes(activity.title)
-              const isLoading = favLoading === activity.title
-              return (
-                <div
-                  key={activity.title}
-                  className="bg-white rounded-2xl p-4 flex gap-3 transition-all hover:shadow-md hover:-translate-y-0.5"
-                  style={{
-                    border: '2px solid #f0f0f0',
-                    boxShadow: '0 2px 0 rgba(0,0,0,0.04)',
-                  }}
-                >
-                  <div className="text-3xl flex-shrink-0">{activity.icon}</div>
-                  <div className="flex-1 min-w-0">
-                    <div
-                      className="font-extrabold text-sm text-gray-800 mb-0.5"
-                      style={{ fontFamily: '"Baloo 2", cursive' }}
-                    >
-                      {activity.title}
-                    </div>
-                    <div
-                      className="text-xs text-gray-500 font-semibold mb-2"
-                      style={{ fontFamily: '"Nunito", sans-serif' }}
-                    >
-                      {activity.description}
-                    </div>
-                    <div className="flex flex-wrap gap-1">
-                      {activity.tags.map((tag) => {
-                        const colors = tagColors[tag] || { bg: '#f5f5f5', text: '#888' }
-                        return (
-                          <span
-                            key={tag}
-                            className="text-xs font-bold px-2 py-0.5 rounded-full cursor-pointer hover:opacity-80"
-                            style={{ backgroundColor: colors.bg, color: colors.text }}
-                            onClick={() => setActiveFilter(tag)}
-                          >
-                            {tag}
-                          </span>
-                        )
-                      })}
-                      <span
-                        className="text-xs font-bold px-2 py-0.5 rounded-full"
-                        style={{ backgroundColor: '#f5f5f5', color: '#9B5DE5' }}
-                      >
-                        {activity.hobby}
-                      </span>
-                    </div>
-                  </div>
-                  {isSignedIn && (
-                    <button
-                      onClick={() => handleFavorite(activity)}
-                      disabled={isLoading}
-                      className="flex-shrink-0 text-xl transition-all hover:scale-125 active:scale-90 disabled:opacity-50"
-                      title={isFav ? 'Fjern fra favoritter' : 'Tilføj til favoritter'}
-                    >
-                      {isLoading ? '⏳' : isFav ? '❤️' : '🤍'}
-                    </button>
-                  )}
-                </div>
-              )
-            })}
+            {filtered.map((activity) => (
+              <ActivityCard
+                key={activity.title}
+                activity={activity}
+                isFav={favorites.includes(activity.title)}
+                isLoading={favLoading === activity.title}
+                isSignedIn={isSignedIn}
+                onFavorite={handleFavorite}
+                onTagClick={setActiveFilter}
+              />
+            ))}
           </div>
         )}
 

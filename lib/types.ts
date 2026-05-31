@@ -34,6 +34,10 @@ export interface Activity {
   description: string
   tags: string[]
   hobby: string
+  time: string
+  difficulty: 'let' | 'mellem' | 'svær'
+  needs: string[]
+  tips: string
 }
 
 export interface Streak {

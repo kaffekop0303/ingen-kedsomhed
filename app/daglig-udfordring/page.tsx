@@ -3,43 +3,33 @@
 import { useState, useEffect } from 'react'
 import { useAuth } from '@clerk/nextjs'
 import Navigation from '@/components/Navigation'
-import { dailyChallenges } from '@/lib/activities'
+import { dailyChallenges, getDayOfYear } from '@/lib/activities'
 import Link from 'next/link'
-
-const weekDays = ['Søn', 'Man', 'Tir', 'Ons', 'Tor', 'Fre', 'Lør']
-const weekDaysFull = ['Søndag', 'Mandag', 'Tirsdag', 'Onsdag', 'Torsdag', 'Fredag', 'Lørdag']
-
-function getTodayChallenge() {
-  const day = new Date().getDay()
-  return dailyChallenges.find((c) => c.day === day) || dailyChallenges[0]
-}
 
 function getTodayDateStr() {
   return new Date().toISOString().split('T')[0]
 }
 
-function getWeekDates(): string[] {
-  const today = new Date()
-  const day = today.getDay()
-  const monday = new Date(today)
-  monday.setDate(today.getDate() - ((day + 6) % 7))
-  return Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(monday)
-    d.setDate(monday.getDate() + i)
-    return d.toISOString().split('T')[0]
-  })
+function getChallengeForDay(date: Date) {
+  const day = getDayOfYear(date)
+  return { challenge: dailyChallenges[day % dailyChallenges.length], dayNumber: day }
+}
+
+function formatDate(date: Date) {
+  return date.toLocaleDateString('da-DK', { weekday: 'long', day: 'numeric', month: 'long' })
 }
 
 export default function DagligUdfordringPage() {
   const { isSignedIn } = useAuth()
-  const todayChallenge = getTodayChallenge()
+  const today = new Date()
+  const { challenge: todayChallenge, dayNumber } = getChallengeForDay(today)
   const todayDate = getTodayDateStr()
-  const weekDates = getWeekDates()
 
   const [streak, setStreak] = useState(0)
   const [completedDates, setCompletedDates] = useState<string[]>([])
   const [completing, setCompleting] = useState(false)
   const [justCompleted, setJustCompleted] = useState(false)
+  const [copied, setCopied] = useState(false)
 
   useEffect(() => {
     if (!isSignedIn) return
@@ -47,18 +37,8 @@ export default function DagligUdfordringPage() {
       .then((r) => r.json())
       .then((data) => {
         if (data?.current_streak !== undefined) setStreak(data.current_streak)
-      })
-      .catch(() => {})
-  }, [isSignedIn])
-
-  useEffect(() => {
-    if (!isSignedIn) return
-    // Check if today is already completed
-    fetch('/api/streak')
-      .then((r) => r.json())
-      .then((data) => {
         if (data?.last_completed_date === todayDate) {
-          setCompletedDates((prev) => [...new Set([...prev, todayDate])])
+          setCompletedDates((prev) => Array.from(new Set([...prev, todayDate])))
           setJustCompleted(true)
         }
       })
@@ -79,23 +59,40 @@ export default function DagligUdfordringPage() {
       })
       const data = await res.json()
       if (data?.current_streak !== undefined) setStreak(data.current_streak)
-      setCompletedDates((prev) => [...new Set([...prev, todayDate])])
+      setCompletedDates((prev) => Array.from(new Set([...prev, todayDate])))
       setJustCompleted(true)
     } finally {
       setCompleting(false)
     }
   }
 
-  const todayDayIndex = new Date().getDay()
-  // Reorder to Mon–Sun
-  const mondayFirst = [1, 2, 3, 4, 5, 6, 0]
+  const handleShare = async () => {
+    const shareText = `🎯 Dagens udfordring #${dayNumber} på Ingen Kedsomhed:\n\n${todayChallenge.emoji} ${todayChallenge.title}\n\n${todayChallenge.description}\n\nProves du den? 💪`
+    try {
+      await navigator.clipboard.writeText(shareText)
+      setCopied(true)
+      setTimeout(() => setCopied(false), 2500)
+    } catch {
+      // fallback: ignore
+    }
+  }
+
+  // Upcoming 3 days
+  const upcomingDays = [1, 2, 3].map((offset) => {
+    const d = new Date(today)
+    d.setDate(today.getDate() + offset)
+    const { challenge, dayNumber: dn } = getChallengeForDay(d)
+    return { date: d, challenge, dayNumber: dn }
+  })
+
+  const isDoneToday = completedDates.includes(todayDate) || justCompleted
 
   return (
     <>
       <Navigation />
       <main className="max-w-2xl mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-6">
           <h1
             className="text-3xl md:text-4xl font-extrabold mb-2"
             style={{ fontFamily: '"Baloo 2", cursive', color: '#FFB703' }}
@@ -125,120 +122,147 @@ export default function DagligUdfordringPage() {
 
         {/* Today's challenge card */}
         <div
-          className="bg-white rounded-3xl p-7 md:p-10 mb-6 text-center"
+          className="rounded-3xl p-7 md:p-10 mb-6 text-center relative overflow-hidden"
           style={{
-            boxShadow: '0 8px 0 #ffe082, 0 12px 30px rgba(255,183,3,0.18)',
-            border: '5px solid #FFB703',
+            background: 'linear-gradient(135deg, #FFB703 0%, #FF6B6B 50%, #F72585 100%)',
+            boxShadow: '0 8px 0 rgba(255,183,3,0.4), 0 12px 40px rgba(255,107,107,0.25)',
           }}
         >
-          <div className="text-6xl mb-4 animate-bounce2">{todayChallenge.emoji}</div>
+          {/* Background decoration */}
           <div
-            className="text-xs font-bold uppercase tracking-widest mb-2"
-            style={{ color: '#FFB703', fontFamily: '"Nunito", sans-serif' }}
-          >
-            {weekDaysFull[new Date().getDay()]}s udfordring
-          </div>
-          <h2
-            className="text-2xl md:text-3xl font-extrabold mb-3"
-            style={{ fontFamily: '"Baloo 2", cursive', color: '#333' }}
-          >
-            {todayChallenge.title}
-          </h2>
-          <p
-            className="text-sm font-semibold text-gray-500 mb-6 max-w-sm mx-auto"
-            style={{ fontFamily: '"Nunito", sans-serif' }}
-          >
-            {todayChallenge.description}
-          </p>
+            className="absolute inset-0 opacity-10"
+            style={{
+              background: 'radial-gradient(circle at 20% 20%, white 0%, transparent 60%), radial-gradient(circle at 80% 80%, white 0%, transparent 60%)',
+            }}
+          />
+          <div className="relative">
+            <div
+              className="inline-block text-xs font-bold uppercase tracking-widest mb-3 px-3 py-1 rounded-full"
+              style={{
+                background: 'rgba(255,255,255,0.25)',
+                color: 'white',
+                fontFamily: '"Nunito", sans-serif',
+              }}
+            >
+              Udfordring #{dayNumber} i år
+            </div>
+            <div className="text-7xl mb-4">{todayChallenge.emoji}</div>
+            <div
+              className="text-xs font-bold uppercase tracking-widest mb-2 opacity-90"
+              style={{ color: 'white', fontFamily: '"Nunito", sans-serif' }}
+            >
+              {formatDate(today)}
+            </div>
+            <h2
+              className="text-2xl md:text-3xl font-extrabold mb-3 text-white"
+              style={{ fontFamily: '"Baloo 2", cursive' }}
+            >
+              {todayChallenge.title}
+            </h2>
+            <p
+              className="text-sm font-semibold mb-6 max-w-sm mx-auto opacity-90 text-white"
+              style={{ fontFamily: '"Nunito", sans-serif' }}
+            >
+              {todayChallenge.description}
+            </p>
 
-          {isSignedIn ? (
-            completedDates.includes(todayDate) || justCompleted ? (
-              <div
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-extrabold text-white text-base"
-                style={{ fontFamily: '"Baloo 2", cursive', background: '#1D9E75' }}
-              >
-                ✅ Gennemført i dag! Godt klaret!
-              </div>
-            ) : (
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center">
+              {isSignedIn ? (
+                isDoneToday ? (
+                  <div
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full font-extrabold text-base"
+                    style={{
+                      fontFamily: '"Baloo 2", cursive',
+                      background: 'rgba(255,255,255,0.95)',
+                      color: '#1D9E75',
+                    }}
+                  >
+                    ✅ Gennemført i dag! Godt klaret!
+                  </div>
+                ) : (
+                  <button
+                    onClick={handleComplete}
+                    disabled={completing}
+                    className="px-8 py-3 rounded-full font-extrabold text-base transition-all hover:scale-105 active:scale-95 disabled:opacity-60"
+                    style={{
+                      fontFamily: '"Baloo 2", cursive',
+                      background: completing ? 'rgba(255,255,255,0.5)' : 'rgba(255,255,255,0.95)',
+                      color: '#FF6B6B',
+                      boxShadow: '0 4px 0 rgba(0,0,0,0.1)',
+                    }}
+                  >
+                    {completing ? '⏳ Gemmer...' : '✅ Marker som gennemført!'}
+                  </button>
+                )
+              ) : (
+                <Link
+                  href="/sign-up"
+                  className="inline-block font-extrabold text-sm py-2.5 px-6 rounded-full transition-all hover:opacity-90"
+                  style={{
+                    fontFamily: '"Baloo 2", cursive',
+                    background: 'rgba(255,255,255,0.95)',
+                    color: '#FF6B6B',
+                  }}
+                >
+                  Log ind for at tracke 🚀
+                </Link>
+              )}
+
+              {/* Share button */}
               <button
-                onClick={handleComplete}
-                disabled={completing}
-                className="px-8 py-3 rounded-full font-extrabold text-base text-white transition-all hover:scale-105 active:scale-95 disabled:opacity-60"
+                onClick={handleShare}
+                className="px-5 py-3 rounded-full font-bold text-sm transition-all hover:scale-105 active:scale-95"
                 style={{
-                  fontFamily: '"Baloo 2", cursive',
-                  background: completing ? '#ccc' : 'linear-gradient(90deg, #1D9E75, #3A86FF)',
-                  boxShadow: '0 4px 0 rgba(29,158,117,0.3)',
+                  fontFamily: '"Nunito", sans-serif',
+                  background: 'rgba(0,0,0,0.2)',
+                  color: 'white',
+                  border: '2px solid rgba(255,255,255,0.4)',
                 }}
               >
-                {completing ? '⏳ Gemmer...' : '✅ Marker som gennemført!'}
+                {copied ? '✅ Kopieret!' : '📤 Del udfordringen'}
               </button>
-            )
-          ) : (
-            <div>
-              <p
-                className="text-sm font-semibold text-gray-400 mb-3"
-                style={{ fontFamily: '"Nunito", sans-serif' }}
-              >
-                Log ind for at tracke dine udfordringer og streak!
-              </p>
-              <Link
-                href="/sign-up"
-                className="inline-block text-white font-extrabold text-sm py-2 px-5 rounded-full transition-all hover:opacity-90"
-                style={{ fontFamily: '"Baloo 2", cursive', background: '#9B5DE5' }}
-              >
-                Opret gratis konto
-              </Link>
             </div>
-          )}
+          </div>
         </div>
 
-        {/* Week overview */}
+        {/* Upcoming challenges */}
         <div
           className="bg-white rounded-3xl p-5 mb-6"
           style={{
-            boxShadow: '0 4px 0 #e0c0ff, 0 8px 20px rgba(155,93,229,0.1)',
-            border: '3px solid #e8d5ff',
+            boxShadow: '0 4px 0 #ffe082, 0 8px 20px rgba(255,183,3,0.12)',
+            border: '3px solid #ffe082',
           }}
         >
           <h3
-            className="font-extrabold text-base mb-4 text-center"
-            style={{ fontFamily: '"Baloo 2", cursive', color: '#9B5DE5' }}
+            className="font-extrabold text-base mb-4"
+            style={{ fontFamily: '"Baloo 2", cursive', color: '#FFB703' }}
           >
-            Ugens udfordringer
+            📅 Kommer snart
           </h3>
-          <div className="grid grid-cols-7 gap-1">
-            {mondayFirst.map((dayIndex) => {
-              const challenge = dailyChallenges.find((c) => c.day === dayIndex)
-              const weekDate = weekDates[mondayFirst.indexOf(dayIndex)]
-              const isToday = dayIndex === todayDayIndex
-              const isDone = completedDates.includes(weekDate) || (isToday && justCompleted)
-              const isPast = weekDate < todayDate
-              return (
-                <div
-                  key={dayIndex}
-                  className="flex flex-col items-center gap-1 p-1.5 rounded-xl transition-all"
-                  style={{
-                    backgroundColor: isToday
-                      ? '#fff8e0'
-                      : isDone
-                      ? '#e8f5ee'
-                      : 'transparent',
-                    border: isToday ? '2px solid #FFB703' : isDone ? '2px solid #1D9E75' : '2px solid transparent',
-                  }}
-                >
-                  <span
-                    className="text-xs font-bold"
-                    style={{
-                      fontFamily: '"Nunito", sans-serif',
-                      color: isToday ? '#FFB703' : isDone ? '#1D9E75' : '#aaa',
-                    }}
+          <div className="flex flex-col gap-2">
+            {upcomingDays.map(({ date, challenge, dayNumber: dn }) => (
+              <div
+                key={dn}
+                className="flex items-center gap-3 p-3 rounded-xl"
+                style={{ backgroundColor: '#fffbef', border: '2px solid #ffedb3' }}
+              >
+                <span className="text-2xl flex-shrink-0">{challenge.emoji}</span>
+                <div className="flex-1 min-w-0">
+                  <div
+                    className="font-bold text-xs mb-0.5"
+                    style={{ fontFamily: '"Nunito", sans-serif', color: '#FFB703' }}
                   >
-                    {weekDays[dayIndex]}
-                  </span>
-                  <span className="text-lg">{isDone ? '✅' : isPast && !isToday ? '⭕' : challenge?.emoji || '❓'}</span>
+                    {formatDate(date)} · Udfordring #{dn}
+                  </div>
+                  <div
+                    className="text-xs font-semibold text-gray-600 truncate"
+                    style={{ fontFamily: '"Nunito", sans-serif' }}
+                  >
+                    {challenge.title}
+                  </div>
                 </div>
-              )
-            })}
+              </div>
+            ))}
           </div>
         </div>
 
@@ -254,16 +278,14 @@ export default function DagligUdfordringPage() {
             className="font-extrabold text-base mb-4"
             style={{ fontFamily: '"Baloo 2", cursive', color: '#555' }}
           >
-            Alle 7 udfordringer
+            Alle {dailyChallenges.length} udfordringer
           </h3>
           <div className="flex flex-col gap-2">
-            {mondayFirst.map((dayIndex) => {
-              const challenge = dailyChallenges.find((c) => c.day === dayIndex)
-              const isToday = dayIndex === todayDayIndex
-              if (!challenge) return null
+            {dailyChallenges.map((challenge, index) => {
+              const isToday = index === getDayOfYear(today) % dailyChallenges.length
               return (
                 <div
-                  key={dayIndex}
+                  key={index}
                   className="flex items-center gap-3 p-3 rounded-xl"
                   style={{
                     backgroundColor: isToday ? '#fff8e0' : '#fafafa',
@@ -273,16 +295,7 @@ export default function DagligUdfordringPage() {
                   <span className="text-xl flex-shrink-0">{challenge.emoji}</span>
                   <div className="flex-1 min-w-0">
                     <div
-                      className="font-bold text-xs"
-                      style={{
-                        fontFamily: '"Baloo 2", cursive',
-                        color: isToday ? '#FFB703' : '#9B5DE5',
-                      }}
-                    >
-                      {weekDaysFull[dayIndex]}
-                    </div>
-                    <div
-                      className="text-xs text-gray-600 font-semibold truncate"
+                      className="text-xs font-semibold text-gray-600 truncate"
                       style={{ fontFamily: '"Nunito", sans-serif' }}
                     >
                       {challenge.title}

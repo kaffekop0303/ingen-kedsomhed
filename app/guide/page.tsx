@@ -15,6 +15,153 @@ const weatherOptions = [
   { id: 'varmt', label: 'Varmt', emoji: '🔥' },
 ]
 
+const difficultyConfig = {
+  let: { bg: '#e8f5e8', text: '#1D9E75', label: 'Let' },
+  mellem: { bg: '#fff3e0', text: '#FF9A3C', label: 'Mellem' },
+  svær: { bg: '#fce8e8', text: '#FF6B6B', label: 'Svær' },
+}
+
+function ActivityCard({
+  activity,
+  isFav,
+  isLoading,
+  isSignedIn,
+  onFavorite,
+}: {
+  activity: Activity
+  isFav: boolean
+  isLoading: boolean
+  isSignedIn: boolean | null | undefined
+  onFavorite: (a: Activity) => void
+}) {
+  const [expanded, setExpanded] = useState(false)
+  const diff = difficultyConfig[activity.difficulty]
+
+  return (
+    <div
+      className="bg-white rounded-2xl transition-all hover:shadow-md"
+      style={{
+        border: expanded ? '2px solid #9B5DE5' : '2px solid #f0e8ff',
+        boxShadow: expanded ? '0 4px 12px rgba(155,93,229,0.15)' : '0 2px 0 #e0c0ff',
+      }}
+    >
+      {/* Main row */}
+      <div
+        className="p-4 flex gap-3 cursor-pointer"
+        onClick={() => setExpanded((e) => !e)}
+      >
+        <div className="text-3xl flex-shrink-0">{activity.icon}</div>
+        <div className="flex-1 min-w-0">
+          <div
+            className="font-extrabold text-sm text-gray-800 mb-1"
+            style={{ fontFamily: '"Baloo 2", cursive' }}
+          >
+            {activity.title}
+          </div>
+          <div
+            className="text-xs text-gray-500 font-semibold mb-2"
+            style={{ fontFamily: '"Nunito", sans-serif' }}
+          >
+            {activity.description}
+          </div>
+          <div className="flex flex-wrap gap-1">
+            {activity.tags.map((tag) => (
+              <span
+                key={tag}
+                className="text-xs font-bold px-2 py-0.5 rounded-full"
+                style={{
+                  backgroundColor: tag === 'aktiv' ? '#fff0e0' : tag === 'rolig' ? '#e8f5ff' : tag === 'kreativ' ? '#f3e8ff' : tag === 'udendørs' ? '#e8f5e8' : '#f5f5f5',
+                  color: tag === 'aktiv' ? '#FF6B6B' : tag === 'rolig' ? '#3A86FF' : tag === 'kreativ' ? '#9B5DE5' : tag === 'udendørs' ? '#1D9E75' : '#888',
+                }}
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+        </div>
+        <div className="flex flex-col items-end gap-2 flex-shrink-0">
+          {isSignedIn && (
+            <button
+              onClick={(e) => { e.stopPropagation(); onFavorite(activity) }}
+              disabled={isLoading}
+              className="text-xl transition-all hover:scale-125 active:scale-90 disabled:opacity-50"
+              title={isFav ? 'Fjern fra favoritter' : 'Tilføj til favoritter'}
+            >
+              {isLoading ? '⏳' : isFav ? '❤️' : '🤍'}
+            </button>
+          )}
+          <span
+            className="text-base leading-none transition-transform duration-200"
+            style={{
+              display: 'inline-block',
+              transform: expanded ? 'rotate(180deg)' : 'rotate(0deg)',
+              color: '#9B5DE5',
+            }}
+          >
+            ▼
+          </span>
+        </div>
+      </div>
+
+      {/* Expanded detail */}
+      {expanded && (
+        <div
+          className="px-4 pb-4"
+          style={{ borderTop: '1px solid #f0e8ff' }}
+        >
+          <div className="pt-3 flex flex-wrap gap-2 mb-3">
+            <span
+              className="text-xs font-bold px-2.5 py-1 rounded-full flex items-center gap-1"
+              style={{ backgroundColor: '#e8f2ff', color: '#3A86FF' }}
+            >
+              ⏱ {activity.time}
+            </span>
+            <span
+              className="text-xs font-bold px-2.5 py-1 rounded-full"
+              style={{ backgroundColor: diff.bg, color: diff.text }}
+            >
+              {diff.label}
+            </span>
+          </div>
+
+          <div className="mb-3">
+            <div
+              className="text-xs font-bold text-gray-500 mb-1 flex items-center gap-1"
+              style={{ fontFamily: '"Nunito", sans-serif' }}
+            >
+              📦 Du skal bruge
+            </div>
+            <div className="flex flex-wrap gap-1">
+              {activity.needs.map((need) => (
+                <span
+                  key={need}
+                  className="text-xs font-semibold px-2 py-0.5 rounded-full"
+                  style={{ backgroundColor: '#f5f5f5', color: '#555' }}
+                >
+                  {need}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div
+            className="rounded-xl p-2.5 flex gap-2 items-start"
+            style={{ backgroundColor: '#fffbef', border: '1px solid #ffedb3' }}
+          >
+            <span className="text-base flex-shrink-0">💡</span>
+            <p
+              className="text-xs font-semibold text-gray-600"
+              style={{ fontFamily: '"Nunito", sans-serif' }}
+            >
+              {activity.tips}
+            </p>
+          </div>
+        </div>
+      )}
+    </div>
+  )
+}
+
 export default function GuidePage() {
   const { isSignedIn } = useAuth()
   const [step, setStep] = useState(1)
@@ -325,7 +472,7 @@ export default function GuidePage() {
                     Dine aktiviteter 🎯
                   </h2>
                   <p className="text-xs text-gray-400 font-semibold" style={{ fontFamily: '"Nunito", sans-serif' }}>
-                    {results.length} forslag til dig
+                    {results.length} forslag · Klik for detaljer
                   </p>
                 </div>
                 <button
@@ -366,60 +513,16 @@ export default function GuidePage() {
                 </div>
               ) : (
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {results.map((activity) => {
-                    const isFav = favorites.includes(activity.title)
-                    const isLoading = favLoading === activity.title
-                    return (
-                      <div
-                        key={activity.title}
-                        className="bg-white rounded-2xl p-4 flex gap-3 transition-all hover:shadow-md"
-                        style={{
-                          border: '2px solid #f0e8ff',
-                          boxShadow: '0 2px 0 #e0c0ff',
-                        }}
-                      >
-                        <div className="text-3xl flex-shrink-0">{activity.icon}</div>
-                        <div className="flex-1 min-w-0">
-                          <div
-                            className="font-extrabold text-sm text-gray-800 mb-1"
-                            style={{ fontFamily: '"Baloo 2", cursive' }}
-                          >
-                            {activity.title}
-                          </div>
-                          <div
-                            className="text-xs text-gray-500 font-semibold mb-2"
-                            style={{ fontFamily: '"Nunito", sans-serif' }}
-                          >
-                            {activity.description}
-                          </div>
-                          <div className="flex flex-wrap gap-1">
-                            {activity.tags.map((tag) => (
-                              <span
-                                key={tag}
-                                className="text-xs font-bold px-2 py-0.5 rounded-full"
-                                style={{
-                                  backgroundColor: tag === 'aktiv' ? '#fff0e0' : tag === 'rolig' ? '#e8f5ff' : tag === 'kreativ' ? '#f3e8ff' : tag === 'udendørs' ? '#e8f5e8' : '#f5f5f5',
-                                  color: tag === 'aktiv' ? '#FF6B6B' : tag === 'rolig' ? '#3A86FF' : tag === 'kreativ' ? '#9B5DE5' : tag === 'udendørs' ? '#1D9E75' : '#888',
-                                }}
-                              >
-                                {tag}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-                        {isSignedIn && (
-                          <button
-                            onClick={() => handleFavorite(activity)}
-                            disabled={isLoading}
-                            className="flex-shrink-0 text-xl transition-all hover:scale-125 active:scale-90 disabled:opacity-50"
-                            title={isFav ? 'Fjern fra favoritter' : 'Tilføj til favoritter'}
-                          >
-                            {isLoading ? '⏳' : isFav ? '❤️' : '🤍'}
-                          </button>
-                        )}
-                      </div>
-                    )
-                  })}
+                  {results.map((activity) => (
+                    <ActivityCard
+                      key={activity.title}
+                      activity={activity}
+                      isFav={favorites.includes(activity.title)}
+                      isLoading={favLoading === activity.title}
+                      isSignedIn={isSignedIn}
+                      onFavorite={handleFavorite}
+                    />
+                  ))}
                 </div>
               )}
 
